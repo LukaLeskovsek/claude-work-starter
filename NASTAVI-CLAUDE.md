@@ -4,7 +4,7 @@ Ta datoteka je navodilo za Claude Code, ko uporabnik izrecno zahteva ta postopek
 
 ## Naš privzeti način dela
 
-Tehnične odločitve sprejmi po spodnjem standardu. Ne ponujaj menijev arhitektur, lokacij konfiguracij ali izbire med različnimi sistemi znanja. Sam odloči, katera podmapa potrebuje kazalo ali dodatna navodila, na podlagi njenega namena in potrjenih pravil. Uporabnika vprašaj o delu, podatkih in dovoljenjih, ne o imenih konfiguracijskih datotek.
+Tehnične odločitve sprejmi po spodnjem standardu. Ne ponujaj menijev arhitektur, lokacij konfiguracij ali izbire med različnimi sistemi znanja. Sam odloči, katera podmapa potrebuje kazalo ali dodatna navodila, na podlagi njenega namena in potrjenih pravil. Intervju pokriva uporabnikov delovni profil, način sodelovanja, lokacije podatkov in smiselne povezave z orodji. Ni namenjen iskanju težav, analizi procesov ali izbiri avtomatizacij. Ne sprašuj, katera naloga povzroča preglavice, vzame največ časa ali prinaša največjo korist. Praktični preizkus pride šele po nastavitvi in je ločen od intervjuja.
 
 Privzeto: slovenščina, kratki odgovori z rezultatom na začetku, navedba virov in jasno označene nejasnosti. Uporabnik lahko izrazi drugačno željo. Osnutke shranjuj ločeno od izvirnikov; pred prepisovanjem, brisanjem, pošiljanjem, deljenjem ali širjenjem dostopa vprašaj. Tehnično nastavitev in preizkuse opravi sam, kadar imaš dovoljenje. Dejanske konflikte ali manjkajoče odvisnosti predaj izvajalcu; ne spremeni intervjuja v odpravljanje tehničnih težav.
 
@@ -12,7 +12,7 @@ Prikaži razumljiv obseg in pomembne posledice, ne skrivaj jih. Celoten tehničn
 
 ## 1. Najprej obseg
 
-Pred intervjujem povej v dveh stavkih: pripravil boš predlog osebnih navodil in pregled izbrane mape; pred zapisom datotek ga bo uporabnik potrdil. Opozori, naj v pogovor ne vpisuje imen strank, zdravstvenih podatkov, gesel ali drugih občutljivih informacij. Potrditev datotek ne pomeni, da se pogovor do takrat nikjer ne shranjuje.
+Pred intervjujem povej v dveh stavkih: pripravil boš osebna navodila, pregled izbrane mape in predlog smiselnih povezav z orodji; pred spremembami bo uporabnik potrdil obseg. Opozori, naj v pogovor ne vpisuje imen strank, zdravstvenih podatkov, gesel ali drugih občutljivih informacij. Potrditev datotek ne pomeni, da se pogovor do takrat nikjer ne shranjuje.
 
 Prvo vprašanje: »Katero delovno mapo želiš urediti? Je zasebna ali skupna in ali so v njej podmape, ki jih ne smem pregledovati?«
 
@@ -27,17 +27,25 @@ Uporabi `dokumenti/scripts/dokumenti.py` iz tega paketa za `pregled`. Predaj `--
 
 ## 2. Kratek intervju
 
-Opravi kratek intervju s približno 5–7 vsebinskimi vprašanji, po eno naenkrat. Če je odgovor že znan, ga ne sprašuj še enkrat. Najprej primer iz dela. Spodnje teme prilagodi pogovoru, ne beri obrazca.
+Opravi kratek intervju s približno šestimi vprašanji, po eno naenkrat. Če je odgovor že znan iz potrditve obsega ali obstoječega profila, ga ne sprašuj še enkrat. Spodnje teme prilagodi pogovoru, ne beri obrazca.
 
-1. Kaj pri delu delaš in kateri trije rezultati so zate najpomembnejši?
-2. Katera ponavljajoča se naloga ti vzame največ časa? Kako jo opraviš danes?
-3. Kakšen Claudeov odgovor bi ti pri tej nalogi res pomagal? Prosi za varen primer oblike, ne dejanskih osebnih podatkov.
-4. Povej, da boš privzeto odgovarjal kratko in v slovenščini, navedel vire ter opozoril na nejasnosti. Vprašaj samo, ali želi pri tem kaj drugače.
-5. Kje so odobreni viri in predloge? Kaj pomenijo glavne podmape, ki si jih našel? Ali ima kateri del drugačna pravila dela?
-6. Pojasni privzete meje: sam pripravljaš osnutke, pred posegi v izvirnike, brisanjem, pošiljanjem in deljenjem vprašaš. Ugotovi, ali veljajo še dodatne omejitve.
-7. Katere podatke ali področja naj izpusti? Zasebno lokacijo profila določi po standardu spodaj; uporabnik potrdi zasebnost in obseg, ne izbira tehnične strukture.
+1. Kakšna je tvoja vloga in s kom običajno sodeluješ? Zadostujejo področje dela in skupine, npr. sodelavci ali zunanje stranke; ne potrebuješ imen posameznikov.
+2. Kako naj komuniciram s tabo in oblikujem odgovore? Predlagaj kratko slovenščino, jasne vire in opozorila na nejasnosti. Preveri odstopanja: jezik, ton, tikanje/vikanje, želeni zapis datumov ali uporaba obstoječih predlog. Ne zahtevaj nove odločitve za vsako podrobnost.
+3. Kje na računalniku so tvoji delovni dokumenti, skupne datoteke in predloge? Dopolni že potrjen obseg in razloži najdene podmape skupaj z uporabnikom. Ne pregleduj novih lokacij brez potrditve.
+4. Katera orodja uporabljaš za službeno e-pošto, koledar in dokumente? Ugotovi, katero delovno okolje uporablja, ter loči službene in osebne račune. Ne sprašuj ga, kateri konektor ali protokol želi; tehnični predlog pripravi sam.
+5. Katere spletne povezave ali skupne vire naj poznam? Na primer skupne mape, intranet, potrjena navodila ali predloge. Zabeleži samo dovoljene povezave; ne zahtevaj gesel, prijavnih povezav z žetoni ali izvoza zasebnih podatkov.
+6. Kaj naj ostane zunaj mojega dostopa in pri čem moram vedno vprašati? Pojasni privzete meje glede posegov v izvirnike, brisanja, pošiljanja in deljenja ter preveri dodatne omejitve. Zasebno lokacijo profila določi po standardu; uporabnik potrdi zasebnost in obseg, ne tehnične strukture.
 
 Ne sklepaj o osebnosti, pravni podlagi ali dovoljenjih. Iz profila odstrani začasne projektne podrobnosti in občutljive informacije; preoblikuj jih v splošna navodila. Ne obljubljaj izbrisa že vnesenih podatkov iz storitve.
+
+### Predlog povezav z orodji
+
+Iz odgovorov pripravi kratek konkreten predlog: katero povezavo z e-pošto, koledarjem ali dokumenti je smiselno vključiti in čemu služi. Predlagaj samo orodja, ki jih uporabnik dejansko uporablja, ne kataloga vtičnikov. Samo spletna povezava ali lokalno sinhronizirana mapa je lahko dovolj; ne dodajaj konektorja brez razloga.
+
+- Pred namestitvijo preveri uradno podprto možnost v dejanski različici Claude, načinu uporabe in vrsti računa. Ne predpostavljaj, da povezava iz Chata deluje tudi v Code ali da je storitev sploh na voljo.
+- Uporabniku povej, kateri račun in podatke bi povezava odprla ter ali omogoča samo branje ali tudi dejanja. Predlagaj najmanjši potreben dostop. Če ponudnik ne omogoča omejitve samo na branje, to povej; navodilo »ne pošiljaj« ni tehnična omejitev dovoljenj.
+- Pred dejansko povezavo pridobi ločeno potrditev. Prijavo uporabnik opravi v uradnem prijavnem oknu; ne zahtevaj gesel ali žetonov v pogovoru. Če je potrebna odobritev skrbnika, povezavo označi kot čakajočo in nadaljuj preostalo nastavitev.
+- Loči »uporablja«, »predlagano« in »povezano ter preizkušeno«. V profilu ne zapiši, da imaš dostop, dokler ni preverjen. Povezava ni dovoljenje za pregled celotnega nabiralnika ali koledarja zaradi sklepanja o uporabniku; preizkusi samo dogovorjen neobčutljiv primer, brez pošiljanja ali spreminjanja dogodkov.
 
 ## 3. Predlog datotek
 
@@ -47,10 +55,10 @@ Pripravi spodnje vsebine iz dejanskih odgovorov, ne iz izmišljenega vzorčnega 
 
 Predlagana zasebna lokacija je `~/.claude/osebno/`, če jo uporabnik potrdi in ni skupna/sinhronizirana z drugimi. Če je račun skupen, globalno osebno nastavitev odloži; ne deli osebnega profila z drugimi.
 
-- `MOJ-DELOVNI-PROFIL.md`: največ približno ena stran. Vloga in rezultati; ponavljajoče se naloge; sodelovanje in oblika odgovorov; odobreni viri; dejanja za potrditev; izključeni podatki. Dodaj datum potrditve. To je referenca, ne avtomatsko naložena datoteka.
+- `MOJ-DELOVNI-PROFIL.md`: največ približno ena stran. Vloga in sodelovanje; jezik, ton in oblika odgovorov; dovoljene lokacije dokumentov in spletni viri; uporabljena orodja in stanje dogovorjenih povezav; dejanja za potrditev in izključeni podatki. Brez seznama problemov ali načrta avtomatizacij. Dodaj datum potrditve. To je referenca, ne avtomatsko naložena datoteka. Lokacije in povezave ne dajejo dodatnih dovoljenj.
 - `~/.claude/CLAUDE.md`: samo kratka trajna navodila, ki koristijo v vseh mapah. Približno 10–20 vrstic: jezik in slog, preverjanje virov, ravnanje ob nejasnostih, potrjevanje tveganih dejanj. Brez imen strank, seznama dokumentov ali celotnega profila. Obstoječe uporabnikove nastavitve združi, ne zamenjaj.
 - `NAVODILA-ZA-CHAT.md` in `NAVODILA-ZA-COWORK.md` v zasebni mapi: kratki besedili za ustrezne nastavitve, brez lokalnih ukazov, ki tam niso na voljo. Jasno označi, da jih je treba vnesti v nastavitve; zapis teh datotek tega ne opravi. Preveri aktualna imena nastavitev v uporabnikovi različici aplikacije. Če vmesnika nimaš na voljo, daj besedilo in navodilo za ročni vnos, ne trdi, da si ga vnesel.
-- `KAKO-UPORABLJAM-CLAUDE.md`: največ ena stran za tega uporabnika. Katero mapo odpre, tri uporabne zahteve iz njegovega dela, kaj mora preveriti in kaj naj prinese izvajalcu po nekaj dneh. Brez tehničnega opisa notranjih datotek. Zapiši šele po prvi praktični nalogi, da primeri izhajajo iz preizkusa.
+- `KAKO-UPORABLJAM-CLAUDE.md`: največ ena stran za tega uporabnika. Katero mapo odpre, katere povezave so pripravljene, nekaj preprostih primerov uporabe, kaj mora preveriti in kaj naj prinese izvajalcu po nekaj dneh. Brez tehničnega opisa notranjih datotek. Dokončaj po preizkusu; pripravljene primere jasno loči od še nepreizkušenih možnosti.
 
 ### Korenska delovna mapa
 
@@ -94,7 +102,9 @@ Po potrditvi:
 
 Ne šteje za izvedeno, če si vsebino samo izpisal v pogovor.
 
-## 5. Kratek preizkus
+## 5. Kratek preizkus po personalizaciji
+
+Intervju je zdaj zaključen. Preizkus samo potrdi, da osnovna nastavitev deluje in uporabnik zna začeti; ni analiza njegovega poslovnega procesa. Izvajalčev testni dokument zadostuje. Uporabniku ni treba najprej najti težavne ali ponavljajoče se naloge.
 
 V Claude Code odpri urejeno delovno mapo v novi seji. Preveri naložena navodila z razpoložljivim pregledom konteksta (trenutno `/context`). Ne sklepaj, da so vse podmapne datoteke že naložene: naložijo se ob branju datotek v teh podmapah.
 

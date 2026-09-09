@@ -9,9 +9,11 @@ Naš osnovni način nastavitve Clauda za vsakodnevno pisarniško delo. Izvajalec
 
    > Preberi NASTAVI-CLAUDE.md in me vodi skozi osnovno nastavitev.
 
-3. Opiši svoje delo, potrdi dovoljeno delovno mapo in skupaj s Claudom opravi eno konkretno nalogo.
+3. Povej, kakšna je tvoja vloga, kako želiš sodelovati s Claudom, kje so dokumenti in katera orodja uporabljaš.
 
-Claude pripravi osebna navodila in pregled dokumentov. Pred spremembami pove, kaj bo uredil in do katerih podatkov bo dostopal. Če je potrebna pomoč z namestitvijo ali dostopom, to uredite z izvajalcem. Ta repozitorij je paket navodil, ne mesto za tvoje službene dokumente ali osebni profil.
+Claude pripravi osebna navodila, pregled dokumentov in predlog smiselnih povezav z e-pošto, koledarjem ali dokumenti. Pred spremembami pove, kaj bo uredil in do katerih podatkov bo dostopal; povezavo računa potrdiš posebej. Ni ti treba izbrati problema za avtomatizacijo. Po nastavitvi z izvajalcem opraviš kratek preizkus na testnem ali odobrenem dokumentu.
+
+Če je potrebna pomoč z namestitvijo ali dostopom, to uredite z izvajalcem. Ta repozitorij je paket navodil, ne mesto za tvoje službene dokumente ali osebni profil.
 
 ## Nato uporabljaj
 
