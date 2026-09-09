@@ -1,0 +1,20 @@
+# Runtime files and local environment
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+.env
+.env.*
+!.env.example
+
+# Generated personal information must never enter this repository
+.claude-docs/
+.claude/
+osebno/
+MOJ-DELOVNI-PROFIL.md
+NAVODILA-ZA-CHAT.md
+NAVODILA-ZA-COWORK.md
+KAKO-UPORABLJAM-CLAUDE.md
+CLAUDE.local.md
+*.bak
+*.bak.*
