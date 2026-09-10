@@ -1,0 +1,27 @@
+CLAUDE WORK STARTER — 10. 9. 2026, v3
+
+1. V Claude Code odprite svojo namensko delovno mapo.
+2. Prilepite:
+
+Preberi celotna navodila na
+https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md
+in me vodi skozi nastavitev. Delovna mapa je trenutno odprta mapa v
+Claude Code. Po potrditvi te mape sam prenesi in varno razširi celoten
+javni paket neposredno vanjo, brez dodatne krovne mape. Obstoječih
+datotek ne prepisuj. Nato nadaljuj intervju; osebne nastavitve potrdiva
+pred zapisom.
+
+Claude opravi prenos in razširjanje; tega vam ni treba početi ročno.
+Če je paket že pripravljen v izbrani mapi, prebere lokalno datoteko
+NASTAVI-CLAUDE.md in nadaljuje nastavitev brez ponovnega prenosa.
+
+Če manjkajo lokalna orodja ali dostop, pomaga izvajalec. Za pripravo
+paketa in popis potrebujete Python 3.9+; za PDF še pdftotext ali pypdf.
+GitHub račun in upravljanje brskalnika s Claudom nista potrebna.
+
+Za prvi preizkus uporabite testni ali odobren dokument. Gesel in
+občutljivih podatkov ne vpisujte v pogovor. Lokalna mapa ne pomeni
+lokalnega izvajanja modela. Povezave računov potrdite posebej.
+
+Po nekaj dneh prinesite en uspešen primer in enega, kjer se je zataknilo.
+Pred deljenjem odstranite občutljive podatke.

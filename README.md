@@ -4,16 +4,16 @@ Naš osnovni način nastavitve Clauda za vsakodnevno pisarniško delo. Izvajalec
 
 ## Prvič
 
-1. Prenesi repozitorij: **Code → Download ZIP**, nato ga razširi. Če je zaseben, potrebuješ dostop ali paket od izvajalca.
-2. V **Claude Code** odpri preneseno mapo in napiši:
+1. V **Claude Code** odpri svojo namensko delovno mapo, ne mape Prenosi ali celotnega računalnika.
+2. Prilepi poziv:
 
-   > Preberi NASTAVI-CLAUDE.md in me vodi skozi osnovno nastavitev.
+   > Preberi celotna navodila na https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md in me vodi skozi nastavitev. Delovna mapa je trenutno odprta mapa v Claude Code. Po potrditvi te mape sam prenesi in varno razširi celoten javni paket neposredno vanjo, brez dodatne krovne mape. Obstoječih datotek ne prepisuj. Nato nadaljuj intervju; osebne nastavitve potrdiva pred zapisom.
 
 3. Povej, kakšna je tvoja vloga, kako želiš sodelovati s Claudom, kje so dokumenti in katera orodja uporabljaš.
 
 Claude pripravi osebna navodila, pregled dokumentov in predlog smiselnih povezav z e-pošto, koledarjem ali dokumenti. Pred spremembami pove, kaj bo uredil in do katerih podatkov bo dostopal; povezavo računa potrdiš posebej. Ni ti treba izbrati problema za avtomatizacijo. Po nastavitvi z izvajalcem opraviš kratek preizkus na testnem ali odobrenem dokumentu.
 
-Če je potrebna pomoč z namestitvijo ali dostopom, to uredite z izvajalcem. Ta repozitorij je paket navodil, ne mesto za tvoje službene dokumente ali osebni profil.
+Claude sam prenese in razširi celoten paket v izbrano mapo; tega ti ni treba opraviti ročno. Paket ne vsebuje vnaprej izpolnjenega osebnega profila. Obstoječe datoteke ohrani; ob konfliktu se ustavi. Če je potrebna pomoč z namestitvijo ali dostopom, to uredite z izvajalcem. Službenih dokumentov ali osebnega profila ne objavljaj v tem javnem repozitoriju.
 
 ## Nato uporabljaj
 

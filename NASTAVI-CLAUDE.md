@@ -2,6 +2,31 @@
 
 Ta datoteka je navodilo za Claude Code, ko uporabnik izrecno zahteva ta postopek. Izvedi naš vnaprej določen osnovni setup in ga prilagodi uporabnikovemu delu. Uporabnik ni sistemski administrator: naučiti se mora uporabljati Claude in pokazati konkreten primer, ko se zatakne. Pogovor vodi v naravni slovenščini, po eno vprašanje naenkrat.
 
+## 0. Pripravi celoten paket v izbrani delovni mapi
+
+Izdaja: `2026-09-10-v3`. Najprej preberi ta dokument v celoti; povzetek spletne strani ne zadostuje. Javni vir je https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md . Če spletno orodje vsebino odreže, jo pridobi v celoti z dovoljenim lokalnim orodjem.
+
+Uporabnik samo odpre svojo namensko delovno mapo v Claude Code in naroči nastavitev. Prenos in razširjanje opraviš **ti**, ne uporabnik. Dejanska trenutno odprta mapa je cilj; ne prestavljaj seje v Prenose, začasno mapo ali nov projekt. Pokaži njeno absolutno pot in z enim vprašanjem potrdi, ali je prava, zasebna ali skupna ter katere podmape ostanejo izključene. To je tudi potrditev obsega iz 1. koraka; pozneje ne sprašuj istega znova. Če gre za domačo mapo, celoten Drive ali nejasen cilj, najprej razreši obseg. Za zapis v skupno mapo mora biti potrjeno tudi upravičenje odgovorne osebe.
+
+Povej: »V to mapo bom dodal celoten javni začetni paket. Obstoječih datotek ne bom prepisal. Nato pripraviva tvoja osebna navodila, ki jih potrdiš pred zapisom.« Naročena nastavitev in potrjena ciljna mapa vključujeta običajen prenos ter dodajanje novih datotek paketa; ne zahtevaj dodatnih pogovornih potrditev za vsak tehnični korak. Dejanska dovoljenja orodij vedno upoštevaj. To še ni dovoljenje za branje vsebine službenih dokumentov, spreminjanje osebnih nastavitev ali povezovanje računov.
+
+### Prenos in preverjanje
+
+- Celoten ZIP: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-10-v3.zip
+- Seznam datotek in kontrolni odtisi: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-10-v3.json
+- Pomočnik: https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/setup/pripravi.py
+- SHA-256 pomočnika: `a7af7eb1fcb2e4c82f8a48eab86059878498e34d02cea528f78a15b401c7d5e1`.
+
+Pomočnika pridobi kot datoteko v novo sistemsko začasno mapo, preveri navedeni odtis in preberi njegovo kodo. Ne izvajaj neposredno toka prenosa. Začasna mapa je samo prostor za zagon pomočnika; **vseh deset datotek paketa mora pristati neposredno v potrjeni delovni mapi**, z relativnimi potmi iz seznama, brez dodatne krovne mape `claude-work-starter/`. Ne prekopiraj samo skilla in skripta.
+
+Uporabi že razpoložljivi Python 3.9+: na macOS običajno `python3`, na Windows `py -3` oziroma preverjeni `python`. Pomočnika zaženi z `--root` in potrjeno absolutno potjo v narekovajih. Sam prenese celoten ZIP, preveri njegov SHA-256 in odtise vseh datotek, zavrne nepričakovane poti ter simbolne povezave in pred zapisom preveri vse cilje. Enake obstoječe datoteke pusti pri miru. Pri drugačni vsebini se ustavi brez prepisovanja; ne preimenuj uporabnikovih datotek in ne izberi drugega cilja na tiho. Konflikt kratko pojasni in ga razreši z uporabnikom oziroma izvajalcem.
+
+Kontrolni odtisi preverjajo skladnost prenosa, ne dokazujejo neškodljivosti kode. Seznam je zunaj ZIP-a, zato ni krožnega kontrolnega odtisa. ZIP vsebuje natanko isto izdajo te datoteke kot javni vir ob objavi, ne starega ali ločenega spletnega postopka. Ne nameščaj novih odvisnosti, ne izklapljaj varnostnih omejitev in ne pošiljaj lokalnih podatkov na spletno stran.
+
+Po uspešnem izpisu pomočnika preveri njegovo ciljno pot in vseh deset datotek. Preberi celoten **lokalni** `NASTAVI-CLAUDE.md` ter nadaljuj pri 1. koraku s potrjenim obsegom. Če si v tej seji paket že preveril in si zdaj prebral lokalna navodila, je 0. korak končan: **ne prenesi paketa znova**. Pri poznejšem ponovnem zagonu je pomočnik varen za nespremenjeno izdajo; obstoječih osebnih nastavitev ne spreminja.
+
+Če manjka Python, omrežni dostop ali lokalno orodje, poskusi drug že razpoložljiv dovoljen način dostopa. Če priprava še vedno ni mogoča, jasno zabeleži blokado za izvajalca in lahko nadaljuješ intervju brez trditve, da je paket nameščen. Uporabniku ne prelagaj prenosa, razširjanja ali premikanja datotek. Ročni poseg izvajalca je izjema, ne običajen potek.
+
 ## Naš privzeti način dela
 
 Tehnične odločitve sprejmi po spodnjem standardu. Ne ponujaj menijev arhitektur, lokacij konfiguracij ali izbire med različnimi sistemi znanja. Sam odloči, katera podmapa potrebuje kazalo ali dodatna navodila, na podlagi njenega namena in potrjenih pravil. Intervju pokriva uporabnikov delovni profil, način sodelovanja, lokacije podatkov in smiselne povezave z orodji. Ni namenjen iskanju težav, analizi procesov ali izbiri avtomatizacij. Ne sprašuj, katera naloga povzroča preglavice, vzame največ časa ali prinaša največjo korist. Praktični preizkus pride šele po nastavitvi in je ločen od intervjuja.
@@ -14,7 +39,7 @@ Prikaži razumljiv obseg in pomembne posledice, ne skrivaj jih. Celoten tehničn
 
 Pred intervjujem povej v dveh stavkih: pripravil boš osebna navodila, pregled izbrane mape in predlog smiselnih povezav z orodji; pred spremembami bo uporabnik potrdil obseg. Opozori, naj v pogovor ne vpisuje imen strank, zdravstvenih podatkov, gesel ali drugih občutljivih informacij. Potrditev datotek ne pomeni, da se pogovor do takrat nikjer ne shranjuje.
 
-Prvo vprašanje: »Katero delovno mapo želiš urediti? Je zasebna ali skupna in ali so v njej podmape, ki jih ne smem pregledovati?«
+Uporabi že potrjeno mapo in izključitve iz 0. koraka. Če obseg še ni potrjen, vprašaj: »Trenutno je odprta mapa [dejanska pot]. Je to prava delovna mapa? Je zasebna ali skupna in ali so v njej podmape, ki jih ne smem pregledovati?«
 
 - Določi dejansko absolutno pot in potrjene izključene podmape. Če obseg ni jasen, ne pregleduj celotnega računalnika, domače mape ali celotnega organizacijskega Drive.
 - Povej, da tudi popis imen datotek lahko razkrije podatke, Claude pa izpis prejme v pogovor. Za pregled vsebine boš izbral samo odobrene primere.
