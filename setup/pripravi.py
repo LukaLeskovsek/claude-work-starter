@@ -25,7 +25,8 @@ def digest(data):
 
 
 def download(url):
-    with urllib.request.urlopen(url, timeout=45) as response:
+    request = urllib.request.Request(url, headers={"User-Agent": "Claude-Work-Starter/" + VERSION})
+    with urllib.request.urlopen(request, timeout=45) as response:
         if response.geturl() != url:
             raise ValueError("Nepričakovana preusmeritev prenosa.")
         data = response.read(LIMIT + 1)

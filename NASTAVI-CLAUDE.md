@@ -15,7 +15,7 @@ Povej: »V to mapo bom dodal celoten javni začetni paket. Obstoječih datotek n
 - Celoten ZIP: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-10-v3.zip
 - Seznam datotek in kontrolni odtisi: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-10-v3.json
 - Pomočnik: https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/setup/pripravi.py
-- SHA-256 pomočnika: `a7af7eb1fcb2e4c82f8a48eab86059878498e34d02cea528f78a15b401c7d5e1`.
+- SHA-256 pomočnika: `80feb71797f7a9cbb413434d55bdbaedf43f22d2a0578a7231da5418b9096cec`.
 
 Pomočnika pridobi kot datoteko v novo sistemsko začasno mapo, preveri navedeni odtis in preberi njegovo kodo. Ne izvajaj neposredno toka prenosa. Začasna mapa je samo prostor za zagon pomočnika; **vseh deset datotek paketa mora pristati neposredno v potrjeni delovni mapi**, z relativnimi potmi iz seznama, brez dodatne krovne mape `claude-work-starter/`. Ne prekopiraj samo skilla in skripta.
 
