@@ -44,7 +44,7 @@ def main():
         command = [binary, "--safe-mode", "--tools", "", "--strict-mcp-config", "--mcp-config", '{"mcpServers":{}}',
                    "--no-session-persistence", "--permission-mode", "dontAsk", "--model", "sonnet", "--output-format", "json",
                    "--json-schema", json.dumps(schema), "-p", prompt]
-        result = subprocess.run(command, cwd=root, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(command, cwd=root, capture_output=True, text=True, encoding="utf-8", timeout=120)
         if result.returncode:
             raise RuntimeError("Claude zagon ni uspel: " + result.stderr[:500])
         response = json.loads(result.stdout)

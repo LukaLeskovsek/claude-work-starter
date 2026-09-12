@@ -35,14 +35,14 @@ class InstallTests(unittest.TestCase):
         times = {f: (target / f).stat().st_mtime_ns for f in n.FILES}
         n.install(self.home, self.work, approved=True)
         self.assertEqual(times, {f: (target / f).stat().st_mtime_ns for f in n.FILES})
-        self.assertEqual(global_file.read_text(), "My existing AIOS")
+        self.assertEqual(global_file.read_text(encoding="utf-8"), "My existing AIOS")
 
     def test_customized_personal_skill_is_not_overwritten(self):
         target = Path(n.install(self.home, self.work, approved=True)["installed"])
         (target / "SKILL.md").write_text("my custom instructions")
         with self.assertRaises(ValueError):
             n.install(self.home, self.work, approved=True)
-        self.assertEqual((target / "SKILL.md").read_text(), "my custom instructions")
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "my custom instructions")
 
     def test_customized_project_preflight_prevents_personal_install(self):
         project = self.work / ".claude/skills/dokumenti"

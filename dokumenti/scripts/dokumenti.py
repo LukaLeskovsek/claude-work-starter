@@ -228,6 +228,8 @@ def read_pdf(path, requested_pages):
         result = subprocess.run(command + [str(path), "-"], capture_output=True, timeout=30)
         if result.returncode:
             raise ValueError("PDF ni bil prebran: " + result.stderr.decode("utf-8", errors="replace")[:600])
+        if not result.stdout:
+            raise ValueError("PDF-pretvornik ni vrnil strani; obseg ali dokument ni potrjen.")
         raw = result.stdout.decode("utf-8", errors="replace")
         pages = raw.split("\f")
         if len(pages) > 1 and not pages[-1].strip():
@@ -318,7 +320,14 @@ def read_xlsx(path):
     return "\n".join(lines), ["Grafi, slike in postavitev niso pregledani. Formule niso preračunane. Preveri izvirnik."], "openpyxl; listi in celice"
 
 
+def utf8_stdio():
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
+
+
 def main():
+    utf8_stdio()
     # Preserve the old isolated inventory interface, but never bypass a registered scope.
     new_commands = {"nastavi", "osvezi", "paket", "potrdi", "stanje", "vkljuci"}
     if (any(a in new_commands for a in sys.argv[1:]) or "--state-dir" in sys.argv

@@ -43,8 +43,8 @@ class BootstrapTests(unittest.TestCase):
         result = p.unpack(self.root, *self.package())
         self.assertEqual(result["created"], len(p.FILES))
         self.assertFalse((self.root / "claude-work-starter").exists())
-        self.assertEqual({str(f.relative_to(self.root)) for f in self.root.rglob("*") if f.is_file()}, set(p.FILES))
-        self.assertIn("## 1. Najprej obseg", Path(result["next"]).read_text())
+        self.assertEqual({f.relative_to(self.root).as_posix() for f in self.root.rglob("*") if f.is_file()}, set(p.FILES))
+        self.assertIn("## 1. Najprej obseg", Path(result["next"]).read_text(encoding="utf-8"))
 
     def test_rerun_is_noop(self):
         archive, manifest = self.package()

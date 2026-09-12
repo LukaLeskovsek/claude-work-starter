@@ -65,7 +65,7 @@ class IndexTests(unittest.TestCase):
         self.assertTrue(peer.search(["delo"], "ponudbe")["matches"])
         for file in (other / ".claude-index").rglob("*"):
             if file.is_file():
-                self.assertNotIn(str(self.base), file.read_text())
+                self.assertNotIn(str(self.base), file.read_text(encoding="utf-8"))
 
     def test_same_time_peers_and_partial_package(self):
         self.doc()

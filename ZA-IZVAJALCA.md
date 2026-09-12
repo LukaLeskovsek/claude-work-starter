@@ -2,7 +2,7 @@
 
 ## Kaj namestimo
 
-Izdaja 2026-09-12-v4 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
+Izdaja 2026-09-12-v4.1 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
 
 - Osebna navodila in profil: zasebno v uporabnikovi Claude konfiguraciji; ne v Nextcloudu.
 - Pripomoček: `~/.claude/skills/dokumenti/`.

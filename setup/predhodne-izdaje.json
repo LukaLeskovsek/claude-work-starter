@@ -10,5 +10,27 @@
     "preverjanje/test_dokumenti.py": "c5fa3f95e028ef04ad60107622051a87b138fb7339ff801f015aae2cb3662fe7",
     "setup/pripravi.py": "80feb71797f7a9cbb413434d55bdbaedf43f22d2a0578a7231da5418b9096cec",
     "preverjanje/test_pripravi.py": "3a6a4c7caeb8bcf1bcb0ee2e1f8e48f44a454779ed368563c0caa5df1659a318"
+  },
+  "2026-09-12-v4": {
+    "README.md": "30485920b17f847f821e1ee4060c439aed053e569b06273c3ff18ba624b3fb9e",
+    "NASTAVI-CLAUDE.md": "6149b15f0242db176f8ebe7e66aae7cdde1d2fe061dcbad200054463436aca97",
+    "ZA-IZVAJALCA.md": "0328003c08ccf43e8a46fe6a73de72d07ae357c0b05d60c21f077db92d1ec887",
+    "PREVERJANJE.md": "1c7ef12abd102a5fdef7cd2788a297ea83a6d69f0869329f534cea47eef9effa",
+    "ZACNI-TUKAJ.txt": "f899618ec0cb75e1b503c1180c81555a57637304d81ebb64bfa81cb6c58fc508",
+    "dokumenti/SKILL.md": "91539e7e223a9f1cee632b438322890ed680a39a303cd27812167478d35db636",
+    "dokumenti/scripts/dokumenti.py": "57213f3bd28165d5cd4ab4388076e2e0a5d52e3fcad4a1a16c220ba6ab78fec6",
+    "preverjanje/test_dokumenti.py": "c5fa3f95e028ef04ad60107622051a87b138fb7339ff801f015aae2cb3662fe7",
+    "setup/pripravi.py": "d3cbab50763aff1d2275721187b4f2570c6cbb1f0f7f155562ba2a36d5f13d6a",
+    "preverjanje/test_pripravi.py": "b9ff4f5059c99624af5123dc684f9b79171044bb7a554097fcda08e228a09723",
+    "dokumenti/scripts/indeks.py": "a78fa2da63303ea8df8cc1b17201fd3518c2d25cd2d9e6a55e8ac8735a19b042",
+    "dokumenti/requirements.txt": "e4281f19bac8f5798673df77a7b5ac9ff43ea2262c9eb131569750b2ad54e234",
+    "preverjanje/test_indeks.py": "fb71bf1ae7e992c5cb37cc4474b62cafec4decdcaa73cc729a33fd45f387b917",
+    "setup/namesti.py": "f3b04aa9c4639b8fe967221036792b5713092469dd91c963b207034e6f7b29b6",
+    "setup/predhodne-izdaje.json": "2a4bd63f585daaa4a6457b3449880a2500938239a22e01beca99c1ad0aa760a6",
+    "preverjanje/test_namesti.py": "749c4bc6b35d74408feff35cd95e5b23523411cf8a438af4cf4db924522182a6",
+    "predloge/GLOBALNA-NAVODILA.md": "514ea4d89940b4007d103be825994771ed9c97356f703444cb27efffc59a47a3",
+    "predloge/DNEVNA-RUTINA.md": "3a295f689c8e1d4f871c8e6ed2c48493a9d10ae35e5a942b966b83111a68f23a",
+    "predloge/IZ-NALOGE-V-SKILL.md": "fa36fe7fad581d7c0180208467476d199e4a61fda3643331c1d7c3a6b2bf2bf3",
+    "preverjanje/preizkus_claude.py": "447e842980f7ab327980a6f5f10f42a78facd76b4493bcc616a81c4e4fa2e7c7"
   }
 }

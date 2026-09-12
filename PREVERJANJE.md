@@ -1,12 +1,12 @@
 # Kaj je preverjeno
 
-Izdaja 2026-09-12-v4. Preverjanje je potekalo na macOS v začasnih mapah z umetnimi podatki. Uporabnikova navodila, AIOS, službeni dokumenti in rutine niso bili spremenjeni.
+Izdaja 2026-09-12-v4.1. Preverjanje je potekalo na macOS v začasnih mapah z umetnimi podatki. Uporabnikova navodila, AIOS, službeni dokumenti in rutine niso bili spremenjeni.
 
 ## Izvedeno lokalno
 
-**51 avtomatskih preizkusov: uspešno.**
+**52 avtomatskih preizkusov: uspešno.**
 
-- 15 preizkusov osnovnega popisa ter branja DOCX/PDF: izključitve, poškodovane datoteke, obseg PDF-strani, vizualna opozorila in izvor.
+- 16 preizkusov osnovnega popisa ter branja DOCX/PDF: izključitve, poškodovane datoteke, obseg PDF-strani, vizualna opozorila in izvor.
 - 17 preizkusov vsebinskega indeksa: priprava, potrjevanje, iskanje, branje, odtisi, XLSX-celice in formule, dnevna omejitev, nadaljevanje dolgega dokumenta, izključitve ter lokalni zaklep.
 - 14 preizkusov prenosa paketa: popolna razširitev, ponovitev brez sprememb, nevarne poti, kontrolni odtisi, konflikti in odobrena nadgradnja znane izdaje z varnostno kopijo.
 - 5 preizkusov osebne namestitve: potrebna odobritev, ohranitev globalnih navodil, ponovitev, varna migracija znane kopije in zavrnitev prilagojenega skilla.
@@ -16,6 +16,10 @@ Drugi umetni uporabnik na drugi lokalni poti ponovno uporabi isti skupni paket b
 Po spremembi, izbrisu, izključitvi ali nedostopnosti izvirnika se stari zadetek ne vrne. Delni ali poškodovani paketi se ne uporabijo. Dolg dokument do dokončanja vseh kosov ni iskalni zadetek.
 
 Uporabljeni različici knjižnic: pypdf 6.10.0 in openpyxl 3.1.5. Namestitveni seznam je pripet na ti preizkušeni različici.
+
+## Popravki po Windows preverjanju
+
+Prvi CI-preizkus je na macOS uspel, na Windows pa odkril odprte SQLite povezave, neprepoznan prazen odgovor PDF-pretvornika ter neprenosljive predpostavke testov o kodiranju in poteh. V4.1 izrecno zapira SQLite, zavrne prazen odgovor pretvornika in uporablja UTF-8 izhod; testi uporabljajo UTF-8 ter prenosljive relativne poti. Dodan je regresijski preizkus praznega PDF-odgovora. Različica postopka priprave je povečana, zato paketi iz v4 niso tiho uporabljeni kot na novo preverjeni.
 
 ## Pravi Claudeov preizkus
 

@@ -4,7 +4,7 @@ Claude supplies summaries through the pending batch protocol; this module never
 pretends that deterministic extraction or a test fixture is an AI summary.
 """
 import argparse
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -18,7 +18,7 @@ import uuid
 import dokumenti as reader
 
 SCHEMA = 1
-PIPELINE = "work-starter-content-1"
+PIPELINE = "work-starter-content-2"
 CHARS = 12000
 MAX_CONTENT = 12 * 1024 * 1024
 TYPES = {".docx", ".pdf", ".xlsx", ".md", ".txt"}
@@ -222,7 +222,7 @@ class Index:
         records, pending, errors = self.scan(list(self.config["collections"]))
         db = safe_path(self.base / "iskanje.sqlite")
         self.base.mkdir(parents=True, exist_ok=True, mode=0o700)
-        with sqlite3.connect(db) as connection:
+        with closing(sqlite3.connect(db)) as connection, connection:
             connection.execute("PRAGMA secure_delete=ON")
             connection.execute("CREATE VIRTUAL TABLE IF NOT EXISTS docs USING fts5(collection UNINDEXED, path, digest UNINDEXED, summary, body)")
             connection.execute("DELETE FROM docs")
@@ -392,7 +392,7 @@ class Index:
             raise ValueError("Vnesi vsaj eno besedo za iskanje.")
         expression = " OR ".join('"' + t.replace('"', '""') + '"' for t in tokens)
         matches, skipped = [], []
-        with sqlite3.connect(db) as connection:
+        with closing(sqlite3.connect(db)) as connection:
             rows = connection.execute("SELECT collection,path,digest FROM docs WHERE docs MATCH ? AND collection IN ("
                 + ",".join("?" for _ in names) + ") ORDER BY bm25(docs) LIMIT 100", [expression, *names]).fetchall()
         for name, rel, digest in rows:
@@ -425,6 +425,7 @@ class Index:
 
 
 def main(argv=None):
+    reader.utf8_stdio()
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--state-dir", help="Zasebna mapa; privzeto ~/.claude-work-starter")
     p.add_argument("--collection")

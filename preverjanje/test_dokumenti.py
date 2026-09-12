@@ -62,11 +62,11 @@ class DocumentsTest(unittest.TestCase):
 
     def test_duplicate_basenames_preserved_and_catalogue_refresh(self):
         d.save_catalogue(self.root, d.inventory(self.root, ["Zasebno"]))
-        data = json.loads((self.root / d.OUTPUT / "inventar.json").read_text())
+        data = json.loads((self.root / d.OUTPUT / "inventar.json").read_text(encoding="utf-8"))
         self.assertEqual(len([f for f in data["files"] if f["type"] == ".docx"]), 2)
         self.assertEqual(d.saved_exclusions(self.root), ["Zasebno"])
         d.save_catalogue(self.root, d.inventory(self.root, d.saved_exclusions(self.root)))
-        self.assertEqual(len(json.loads((self.root / d.OUTPUT / "inventar.json").read_text())["files"]), 3)
+        self.assertEqual(len(json.loads((self.root / d.OUTPUT / "inventar.json").read_text(encoding="utf-8"))["files"]), 3)
 
     def test_cli_keeps_exclusions_even_if_flag_is_omitted(self):
         d.save_catalogue(self.root, d.inventory(self.root, ["Zasebno"]))
@@ -90,7 +90,7 @@ class DocumentsTest(unittest.TestCase):
             exclusions = d.saved_exclusions(new_root)
             self.assertEqual(exclusions, ["Zasebno"])
             d.save_catalogue(new_root, d.inventory(new_root, exclusions))
-            data = json.loads((new_root / d.OUTPUT / "inventar.json").read_text())
+            data = json.loads((new_root / d.OUTPUT / "inventar.json").read_text(encoding="utf-8"))
             self.assertEqual(data["root"], str(new_root))
             self.assertNotIn(".pdf", d.summary(data)["by_type"])
 
@@ -100,7 +100,7 @@ class DocumentsTest(unittest.TestCase):
         (folder / "KAZALO.md").write_text("Uporabnikov zapis")
         with self.assertRaises(ValueError):
             d.save_catalogue(self.root, d.inventory(self.root, []))
-        self.assertEqual((folder / "KAZALO.md").read_text(), "Uporabnikov zapis")
+        self.assertEqual((folder / "KAZALO.md").read_text(encoding="utf-8"), "Uporabnikov zapis")
 
     def test_traversal_and_excluded_read_refused(self):
         for path in ("../other.docx", str(self.doc), "Zasebno/osebno.pdf", ".skrito/skrito.pdf"):
@@ -146,6 +146,13 @@ class DocumentsTest(unittest.TestCase):
         self.assertIn("Stran 2: brez izvlečenega besedila", output)
         with self.assertRaises(ValueError):
             d.read_source(self.root, "dve-strani.pdf", [], "3")
+
+    def test_empty_converter_output_does_not_invent_blank_page(self):
+        import subprocess
+        with mock.patch.object(d.shutil, "which", return_value="pdftotext"), mock.patch.object(
+                d.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, b"", b"")):
+            with self.assertRaises(ValueError):
+                d.read_pdf(self.root / "unused.pdf", "3")
 
     def test_image_only_pdf_does_not_claim_empty_document(self):
         from reportlab.pdfgen import canvas

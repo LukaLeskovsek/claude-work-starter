@@ -85,6 +85,9 @@ def install(home, workspace, approved=False, migrate=False):
 
 
 def main():
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--home", default=str(Path.home()))
     p.add_argument("--workspace", required=True)

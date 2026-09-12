@@ -8,10 +8,11 @@ import stat
 import os
 import tempfile
 import uuid
+import sys
 import urllib.request
 import zipfile
 
-VERSION = "2026-09-12-v4"
+VERSION = "2026-09-12-v4.1"
 BASE = "https://claude-delavnica-starter.luka36512.chatgpt.site"
 ARCHIVE_URL = f"{BASE}/claude-work-starter-{VERSION}.zip"
 MANIFEST_URL = f"{BASE}/claude-work-starter-{VERSION}.json"
@@ -77,7 +78,8 @@ def unpack(root, archive, manifest, upgrade=False):
                 if any(p.name.casefold() == part.casefold() and p.name != part for p in current.iterdir()):
                     raise ValueError("Konflikt zapisa imena: " + name)
             current = current / part
-            if current.is_symlink():
+            if (current.is_symlink() or getattr(current, "is_junction", lambda: False)()
+                    or (current.exists() and getattr(current.stat(), "st_file_attributes", 0) & 0x400)):
                 raise ValueError("Simbolna povezava v ciljni poti: " + name)
             if current.exists():
                 last = i == len(Path(name).parts) - 1
@@ -137,6 +139,9 @@ def unpack(root, archive, manifest, upgrade=False):
 
 
 def main():
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", required=True, help="Potrjena absolutna delovna mapa")
     parser.add_argument("--upgrade", action="store_true", help="Po potrditvi nadgradi samo nespremenjene datoteke znane izdaje; ustvari kopijo")

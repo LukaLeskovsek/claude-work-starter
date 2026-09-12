@@ -4,7 +4,7 @@ Ta datoteka je navodilo za Claude Code, ko uporabnik izrecno zahteva ta postopek
 
 ## 0. Pripravi celoten paket v izbrani delovni mapi
 
-Izdaja: `2026-09-12-v4`. Najprej preberi ta dokument v celoti; povzetek spletne strani ne zadostuje. Javni vir je https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md . Če spletno orodje vsebino odreže, jo pridobi v celoti z dovoljenim lokalnim orodjem.
+Izdaja: `2026-09-12-v4.1`. Najprej preberi ta dokument v celoti; povzetek spletne strani ne zadostuje. Javni vir je https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md . Če spletno orodje vsebino odreže, jo pridobi v celoti z dovoljenim lokalnim orodjem.
 
 Uporabnik samo odpre svojo namensko delovno mapo v Claude Code in naroči nastavitev. Prenos in razširjanje opraviš **ti**, ne uporabnik. Dejanska trenutno odprta mapa je cilj; ne prestavljaj seje v Prenose, začasno mapo ali nov projekt. Pokaži njeno absolutno pot in z enim vprašanjem potrdi, ali je prava, zasebna ali skupna ter katere podmape ostanejo izključene. To je tudi potrditev obsega iz 1. koraka; pozneje ne sprašuj istega znova. Če gre za domačo mapo, celoten Drive ali nejasen cilj, najprej razreši obseg. Za zapis v skupno mapo mora biti potrjeno tudi upravičenje odgovorne osebe.
 
@@ -12,10 +12,10 @@ Povej: »V to mapo bom dodal celoten javni začetni paket. Obstoječih datotek n
 
 ### Prenos in preverjanje
 
-- Celoten ZIP: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.zip
-- Seznam datotek in kontrolni odtisi: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.json
+- Celoten ZIP: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.1.zip
+- Seznam datotek in kontrolni odtisi: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.1.json
 - Pomočnik: https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/setup/pripravi.py
-- SHA-256 pomočnika: `d3cbab50763aff1d2275721187b4f2570c6cbb1f0f7f155562ba2a36d5f13d6a`.
+- SHA-256 pomočnika: `b0534d90cca620d5ca4ee61e40c17cb4ebceaa6bd5ababedf6aaaa443481eb09`.
 
 Pomočnika pridobi kot datoteko v novo sistemsko začasno mapo, preveri navedeni odtis in preberi njegovo kodo. Ne izvajaj neposredno toka prenosa. Začasna mapa je samo prostor za zagon pomočnika; **vse datoteke paketa mora pristati neposredno v potrjeni delovni mapi**, z relativnimi potmi iz seznama, brez dodatne krovne mape `claude-work-starter/`. Ne prekopiraj samo skilla in skripta.
 
