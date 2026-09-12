@@ -1,58 +1,65 @@
 # Za izvajalca
 
-Naš standard določa prvo raven nastavitve. Intervju zajame delovni profil, način sodelovanja, lokacije datotek ter uporabljena orodja in smiselne povezave. Ni odkrivanje težav ali popis procesov; ne iščemo najbolj zamudne naloge ali priložnosti za avtomatizacijo. Tehnične odločitve in odpravljanje težav so odgovornost izvajalca.
+## Kaj namestimo
 
-## Dogovorjeni standard
+Izdaja 2026-09-12-v4 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
 
-- Slovenščina, kratki odgovori, najprej uporaben rezultat; uporabnikove jezikovne želje imajo prednost.
-- Vprašanja samo ob pomembni nejasnosti. Dejstva, predlogi in neznani podatki so jasno ločeni.
-- Delo v dogovorjeni mapi; osebni profil zunaj skupnih map.
-- Na podlagi dejansko uporabljene e-pošte, koledarja in dokumentnega okolja predlagaj smiselne povezave. Preveri podporo in dovoljenja; povezava se izvede šele po ločeni potrditvi. Predlagana povezava ni že vzpostavljen dostop.
-- Nov osnutek v ločenem izhodu, ohranjeni izvirniki. Pred brisanjem, prepisovanjem, pošiljanjem, deljenjem ali širjenjem dostopa vprašaj.
-- En popis dokumentov in sprotno branje izbranih izvirnikov. Dodatna navodila samo za podmape z drugačnimi pravili.
-- Po zaključeni personalizaciji sledi kratek preizkus uporabe. Zadostuje pripravljen testni dokument; uporabniku ni treba opredeliti procesa za avtomatizacijo.
-- Po nekaj dneh kratek pregled konkretnih primerov in ozkih popravkov nastavitve. Samodejni opomniki niso del paketa.
+- Osebna navodila in profil: zasebno v uporabnikovi Claude konfiguraciji; ne v Nextcloudu.
+- Pripomoček: `~/.claude/skills/dokumenti/`.
+- Osebno stanje: `~/.claude-work-starter/`, z `nastavitve.json`, `KAZALO.md`, `iskanje.sqlite` in `stanje.json`.
+- Skupni izvlečki in povzetki: `.claude-index/` v zbirki, samo po potrditvi enakega kroga dostopa in dovoljenja pisanja. Sicer lokalno pod osebno mapo.
+- Poslovna pravila in poslovni skilli: potrjeni projektni dokumenti v Nextcloudu. Osebni /dokumenti naj ne bo podvojen kot projektni skill.
 
-## Kaj Claude pripravi
+SQLite je ponovno zgradljiva lokalna iskalna datoteka, ne strežnik. Vsebuje kopijo dovoljene vsebine in je občutljiv. Skrita mapa ni varnostna meja; preveri dejansko zasebnost in izključitev iz sinhronizacije. Pri skupnem računalniškem računu nastavitev odloži.
 
-| Lokacija | Namen |
-| --- | --- |
-| Zasebna lokalna mapa | `MOJ-DELOVNI-PROFIL.md` z načinom sodelovanja, lokacijami in stanjem povezav; besedili za nastavitve Chat/Cowork ter kratka navodila za uporabo |
-| `~/.claude/CLAUDE.md` | Kratka osebna navodila za vse delovne mape v Claude Code |
-| Izbrana delovna mapa | `CLAUDE.md`: namen mape, potrjeni viri, izhodi, način dela in meje |
-| `.claude-docs/` | `KAZALO.md` s pregledom in `inventar.json` s potmi; brez kopije celotne vsebine |
-| `.claude/skills/dokumenti/` | Ukaz `/dokumenti` za popis, iskanje po imenih in branje izbranih DOCX/PDF |
-| Posamezne podmape po potrebi | `CLAUDE.md` samo za posebnosti; ločeno kazalo samo za samostojno zbirko |
+## Celoten potek na enem računalniku
 
-Uporabnik potrdi vsebino profila in razumljiv povzetek sprememb. Celotni tehnični predlog in ciljne poti so na voljo na zahtevo; uporabniku jih ni treba urejati. Obstoječe nastavitve se ohranijo, spremembe varnostno kopirajo, konflikti pa se ne razrešujejo z ugibanjem.
+1. Potrdi koren, izključitve, obdelavo pri Claudu in zasebno lokacijo. Za skupno shranjevanje posebej preveri dostope. Izvirnikov ne premikaj.
+2. Agent opravi intervju o vlogi, sodelovanju, lokacijah in povezavah. Ne izvaja popisa problematičnih procesov.
+3. Po potrditvi zažene pomočnika za osebni skill, združi profil ter globalna navodila iz `predloge/GLOBALNA-NAVODILA.md`. Obstoječi AIOS ostane.
+4. Registrira zbirke s stabilnimi ID-ji in vsemi izključitvami. Privzeti nabor je spremenjeno od 2026-01-01, ne »vse veljavno od 2026«. Starejši dokumenti se izrecno vključijo.
+5. Pripravi majhno serijo. Claude vrne resnične povzetke v zasebni odgovori.json; pripomoček potrdi rezultat in objavi dokončane pakete. Ročno primerjaj pomembna dejstva z izvirnikom.
+6. V novem pogovoru brez omembe /dokumenti preveri samodejno izbiro osebnega skilla, pravi obseg in vir. Preveri tudi podmapo in nepovezano mapo.
+7. Ustvari eno lokalno Desktop rutino po `predloge/DNEVNA-RUTINA.md`. Preveri Run now, naslednji zagon brez ponovne obdelave in dejanski samodejni zagon.
+8. Zaposlenemu ostane kratek napotek za delo in povratno informacijo po nekaj dneh, ne tehnično poročilo.
 
-## Priprava prvega srečanja
+## Predpogoji
 
-Preveri, ali so nameščeni Claude Code, Python 3.9+ in ustrezno lokalno orodje za PDF. Na Windows je lahko ukaz `py -3`, na macOS `python3`. DOCX in popis ne potrebujeta dodatnih Python knjižnic. Za PDF se uporabi `pdftotext` ali `pypdf`; manjkajoče odvisnosti namesti izvajalec po dogovoru. Ne pričakuj, da jih bodo zaposleni nameščali sredi intervjuja.
+Python 3.9+ s SQLite FTS5. DOCX in osnovni popis ne potrebujeta dodatnih knjižnic; PDF uporablja pdftotext ali pypdf, XLSX uporablja openpyxl. Namestitveni seznam je `dokumenti/requirements.txt`. Po odobritvi uporabi ločeni venv v zasebni mapi indeksatorja, ne globalnih paketov. Odvisnosti se ne nameščajo med iskanjem.
 
-Potrdi račune, dovoljene podatke, namensko delovno mapo, izključitve in dostop do nje. Za prvo nalogo pripravi testni ali odobren primer. Če je računalniški račun skupen, najprej uredi ločene uporabnike ali omeji nastavitev na projekt. Spremembe skupnih pravil potrebujejo odgovorno osebo; osebni `CLAUDE.local.md` v skupnem Drive ni zaseben.
+Če manjkajo orodja ali odobritve, nadaljuj neodvisni del, blokado pa pokaži. Ne spreminjaj varnostnih nastavitev ali prijav, da bi test navidezno uspel.
 
-Pri povezavah preveri dejansko podprto možnost za uporabnikov račun in način uporabe Claude. Prednost ima najmanjši potreben dostop; če povezava zahteva širša dovoljenja, to razloži pred potrditvijo. Skrbniška blokada ne ustavi priprave osebnih navodil in lokalne mape. V profilu loči uporabljena orodja, predlagane povezave in dejansko preizkušen dostop. Ne pregleduj nabiralnika ali koledarja zato, da bi iz vsebine sestavil uporabnikov profil.
+## Dnevno delovanje
 
-Ta repozitorij ne vsebuje že izpolnjenega profila. Namestitveni postopek je v [NASTAVI-CLAUDE.md](NASTAVI-CLAUDE.md); izvajaj ga samo na izrecno zahtevo uporabnika. Ne izvajaj ga avtomatsko med razvojem ali pregledom repozitorija.
+Vsak zaposleni ima svojo lokalno rutino, praviloma ob 9.00. Računalnik mora biti buden in Claude Desktop odprt. Rutina uporablja obstoječi Claudeov račun; lokalno izvajanje ne pomeni lokalnega modela ali brezplačne porabe.
 
-## Meje
+Pripomoček najprej poišče veljavne pakete glede na odtis izvirnika in različico postopka. Drugi računalnik lahko povzetek ponovno uporabi. Obstoj kazala ali datum mape nista dokaz svežine.
 
-`CLAUDE.md` so navodila modelu, ne tehnične omejitve dostopa. Globalni `CLAUDE.md` velja za Claude Code, ne za nastavitve Chat in Cowork; tja je treba pripravljeni besedili dejansko vnesti. Za globalno datoteko je lahko potrebno dodatno dovoljenje zunaj odprte mape. Ne uporabljaj obhoda dovoljenj.
+Na dan izda največ 10 dokumentov oziroma 20 kosov po največ 12.000 znakov. To ni natančna omejitev tokenov. Paket, ki čaka na povzetke, se ponovno uporabi do potrditve; daljši dokument se nadaljuje naslednji dan. Delni dokument še ni iskalni zadetek. Nespremenjeni dokumenti ne potrebujejo novega povzemanja.
 
-Kazalo vsebuje imena in poti, ne preiskane vsebine. Če imena ne zadostujejo, dogovori omejeno zbirko za vsebinski pregled. PDF-skeni, zahtevne tabele, grafi in pomembni zneski potrebujejo pregled izvirnika; ta paket ne izvaja OCR. Datum spremembe datoteke ni nujno datum dokumenta.
+Sočasna obdelava na dveh računalnikih je dovoljena. Paketi so ločeni in kontrolno preverjeni; delni prenosi se preskočijo. Ne zagotavljamo obdelave natanko enkrat. Skupno kazalo je zamenljiva orientacija, ne vir dovoljenj ali popolnosti.
 
-Skript ne uporablja omrežja in ne spreminja izvirnikov; njegov izpis pa Claude prejme v pogovor. Pregled brez pisanja datotek ni jamstvo, da storitev ne hrani pogovora. V ta repozitorij ne dodajaj strankinih dokumentov, profilov, inventarjev ali poverilnic. Zasebnost repozitorija ni nadomestilo za pregled vsebine pred nalaganjem.
+Lokalni `izvajanje.lock` prepreči sočasno pisanje dveh lokalnih vzdrževalnih ukazov. Po sesutju preveri, da proces ne teče več, šele nato odstrani točno to zaklepno datoteko. Ne briši porabe ali delovnih paketov za obhod omejitev.
 
-Ni strežnika, baze, avtomatskega OCR, osebnih GBrain instanc ali nenadzorovanih opravil.
+## Meje in odprte preverbe
 
-## Viri in preizkusi
+- OCR, interpretacija grafov in preračunavanje XLSX niso vključeni. Formule in shranjeni rezultati so ločeni; rezultat je lahko zastarel ali manjka.
+- Bralnik ima omejitve velikosti. Prevelik ali poškodovan dokument je vidna napaka, ne popoln rezultat.
+- Izključitve se uveljavijo tudi pri branju; omejitev v navodilih ni isto kot tehnično dovoljenje.
+- Pri izgubi dostopa oziroma spremembi vira se stari zadetek ne vrne. Brez sinhroniziranih sprememb Nextclouda lokalni pripomoček ne pozna novih strežniških ACL-jev.
+- Rutine ne brišejo skupnih paketov. Skrbnik ureja hrambo in čiščenje; umik iz iskanja ni izbris vseh kopij, dnevnikov ali varnostnih kopij.
+- Povzetki so modelni izhod. Preverjanje JSON-a in kontrolnih odtisov ne zagotavlja resničnosti.
+- Skupne skille objavlja skrbnik. Za prvi Intrix primer uporabi `predloge/IZ-NALOGE-V-SKILL.md`; generična predloga ni že preizkušen CRM skill.
+- Osebni skill ne omogoči samodejnega dostopa iz spletnega Chata ali Coworka. To nista površini pilotne integracije.
 
-Uradne reference, preverjene pri pripravi 9. 9. 2026; pred delavnico preveri morebitne spremembe vmesnika:
+## Nadgradnja in vrnitev
 
-- [Obseg in nalaganje CLAUDE.md](https://code.claude.com/docs/en/memory)
-- [Claude Code skilli in ukazi](https://code.claude.com/docs/en/skills)
-- [Personalizacija Chat](https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features)
-- [Cowork in globalna navodila](https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork)
+Prenosni pomočnik z `--upgrade` nadgradi samo nespremenjene datoteke znane prejšnje izdaje in ustvari kopijo pod .claude-starter-backups v delovni mapi. Pri drugih spremembah se ustavi pred zapisovanjem.
 
-Dokazi in še nepreverjeni deli: [PREVERJANJE.md](PREVERJANJE.md). Pred skupinsko delavnico izvedi celoten potek na testnem uporabniku.
+Osebni namestitveni pomočnik ima ločen korak migracije projektnega skilla. Samodejno umakne samo prepoznano nespremenjeno kopijo, v zasebno obnovljivo mapo. Prilagojene omejitve pregleda in prenese izvajalec; ne prepiši jih na slepo.
+
+Za vrnitev najprej ustavi lokalno rutino, preveri vsebino konkretne varnostne kopije ter obnovi le datoteke tega starterja po potrditvi. Ne ponastavljaj celotne .claude ali AIOS. Lokalni SQLite lahko obnoviš z ukazom kazalo brez novega povzemanja.
+
+## Dokaz izvedbe
+
+Aktualni rezultati in manjkajoči preizkusi so v PREVERJANJE.md. Testi v začasnih mapah ne dokazujejo delovanja dejanskega Nextclouda, Windows dovoljenj, samodejne izbire skilla ali Desktop rutine. Ti preizkusi so pogoj zaključene namestitve pri zaposlenem.

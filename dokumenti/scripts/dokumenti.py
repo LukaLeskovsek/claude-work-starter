@@ -27,7 +27,7 @@ def now():
 
 def relative(value):
     path = Path(value)
-    if path.is_absolute() or ".." in path.parts or not path.parts:
+    if path.is_absolute() or ".." in path.parts or not path.parts or "\\" in str(value) or ":" in str(value):
         raise ValueError("Uporabi konkretno relativno pot znotraj delovne mape.")
     return path.as_posix()
 
@@ -64,8 +64,8 @@ def inventory(root, exclusions):
             path = Path(entry.path)
             rel = path.relative_to(root).as_posix()
             try:
-                if entry.is_symlink():
-                    skipped.append({"path": rel, "reason": "simbolna povezava"})
+                if entry.is_symlink() or getattr(entry.stat(follow_symlinks=False), "st_file_attributes", 0) & 0x400:
+                    skipped.append({"path": rel, "reason": "simbolna povezava/junction ali nedostopna lokalna cloud datoteka"})
                 elif blocked(rel, exclusions):
                     skipped.append({"path": rel, "reason": "izključena/skrita/tehnična pot"})
                 elif entry.is_dir(follow_symlinks=False):
@@ -98,7 +98,7 @@ def summary(data):
 def atomic_text(path, content):
     if path.is_symlink():
         raise ValueError("Izhod je simbolna povezava; zapis zavrnjen.")
-    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent, delete=False) as out:
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=path.parent, delete=False) as out:
         temp = Path(out.name)
         out.write(content)
     try:
@@ -150,7 +150,7 @@ def safe_source(root, value, exclusions):
     current = root
     for part in Path(rel).parts:
         current = current / part
-        if current.is_symlink():
+        if current.is_symlink() or getattr(current, "is_junction", lambda: False)():
             raise ValueError("Branje prek simbolne povezave ni dovoljeno.")
     if not current.is_file():
         raise ValueError("Datoteka ne obstaja ali ni običajna datoteka.")
@@ -267,8 +267,14 @@ def read_source(root, value, exclusions, pages=None):
         body, warnings, extractor = read_docx(path)
     elif path.suffix.lower() == ".pdf":
         body, warnings, extractor = read_pdf(path, pages)
+    elif path.suffix.lower() == ".xlsx":
+        if pages:
+            raise ValueError("Izbira strani velja samo za PDF.")
+        body, warnings, extractor = read_xlsx(path)
+    elif path.suffix.lower() in {".txt", ".md"}:
+        body, warnings, extractor = path.read_text(encoding="utf-8-sig"), [], "UTF-8"
     else:
-        raise ValueError("Ta bralnik podpira DOCX in PDF. MD/TXT preberi neposredno; druge vrste potrebujejo drugo orodje.")
+        raise ValueError("Podprti so DOCX, PDF, XLSX, MD in TXT.")
     if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
         raise ValueError("Izvirnik se je med branjem spremenil. Izvlek ni vrnjen; ponovi branje.")
     return "\n".join(["# Izvlek dokumenta", f"Vir (relativna pot): {json.dumps(rel, ensure_ascii=False)}",
@@ -278,7 +284,47 @@ def read_source(root, value, exclusions, pages=None):
                        "--- Konec vsebine vira ---"])
 
 
+def read_xlsx(path):
+    try:
+        from openpyxl import load_workbook
+    except ImportError as exc:
+        raise ValueError("Manjka openpyxl; izvajalec naj odobri namestitev iz requirements.txt.") from exc
+    with zipfile.ZipFile(path) as archive:
+        if sum(i.file_size for i in archive.infolist()) > 100 * 1024 * 1024:
+            raise ValueError("Razširjeni XLSX presega 100 MiB.")
+    formulas = load_workbook(path, read_only=True, data_only=False, keep_links=False)
+    values = load_workbook(path, read_only=True, data_only=True, keep_links=False)
+    lines, count = [], 0
+    try:
+        for sheet in formulas:
+            lines += [f"## List {json.dumps(sheet.title, ensure_ascii=False)} ({sheet.sheet_state})"]
+            if sheet.max_row * sheet.max_column > 200000:
+                raise ValueError("List presega 200.000 celic; potreben je manjši odobren izvoz.")
+            for row, cached in zip(sheet.iter_rows(), values[sheet.title].iter_rows()):
+                for cell, value in zip(row, cached):
+                    if cell.value is None:
+                        continue
+                    count += 1
+                    if count > 100000:
+                        raise ValueError("XLSX presega 100.000 nepraznih celic; razdeli izvoz.")
+                    payload = {"value": cell.value, "format": cell.number_format}
+                    if cell.data_type == "f":
+                        payload = {"formula": cell.value, "cached_value": value.value,
+                                   "note": "Ni preračunano; shranjen rezultat je lahko zastarel ali manjka."}
+                    lines.append(f"{sheet.title}!{cell.coordinate}: " + json.dumps(payload, ensure_ascii=False, default=str))
+    finally:
+        formulas.close()
+        values.close()
+    return "\n".join(lines), ["Grafi, slike in postavitev niso pregledani. Formule niso preračunane. Preveri izvirnik."], "openpyxl; listi in celice"
+
+
 def main():
+    # Preserve the old isolated inventory interface, but never bypass a registered scope.
+    new_commands = {"nastavi", "osvezi", "paket", "potrdi", "stanje", "vkljuci"}
+    if (any(a in new_commands for a in sys.argv[1:]) or "--state-dir" in sys.argv
+            or (Path.home() / ".claude-work-starter/nastavitve.json").exists()):
+        from indeks import main as indexed_main
+        return indexed_main()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", required=True, help="Odobrena krovna mapa")
     parser.add_argument("--exclude", action="append", default=[], help="Izključena relativna pot; ponovi za več poti")

@@ -122,6 +122,22 @@ class BootstrapTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 p.unpack(self.root, archive, manifest)
 
+    def test_approved_known_upgrade_keeps_recoverable_backup(self):
+        old = b"known old starter README"
+        (self.root / "README.md").write_bytes(old)
+        self.files["setup/predhodne-izdaje.json"] = json.dumps({"fixture": {"README.md": p.digest(old)}}).encode()
+        result = p.unpack(self.root, *self.package(), upgrade=True)
+        self.assertEqual(result["updated"], 1)
+        self.assertEqual((Path(result["backup"]) / "README.md").read_bytes(), old)
+        self.assertEqual((self.root / "README.md").read_bytes(), self.files["README.md"])
+
+    def test_upgrade_never_overwrites_customized_files(self):
+        old = b"my customized README"
+        (self.root / "README.md").write_bytes(old)
+        with self.assertRaises(ValueError):
+            p.unpack(self.root, *self.package(), upgrade=True)
+        self.assertEqual(list(self.root.iterdir()), [self.root / "README.md"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -9,6 +9,9 @@ __pycache__/
 
 # Generated personal information must never enter this repository
 .claude-docs/
+.claude-index/
+.claude-work-starter/
+.claude-starter-backups/
 .claude/
 osebno/
 MOJ-DELOVNI-PROFIL.md

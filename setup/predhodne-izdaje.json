@@ -1,0 +1,14 @@
+{
+  "2026-09-10-v3": {
+    "README.md": "e017c8f485031042f178a8e2553e3b7cba9b2a16ed87a4c7dea983803f549923",
+    "NASTAVI-CLAUDE.md": "7a9e59954ae4d3274322825eb15926104c161e46f97ed448d2e86eb780c239a5",
+    "ZA-IZVAJALCA.md": "f55142d0377cf1609ec2593f5887f7900656582ee564b26351ed02b94e5187c5",
+    "PREVERJANJE.md": "b319e7dbcafda130dd3b41223c2d9655792b0b67323a75102dec660143a0b7b4",
+    "ZACNI-TUKAJ.txt": "f899618ec0cb75e1b503c1180c81555a57637304d81ebb64bfa81cb6c58fc508",
+    "dokumenti/SKILL.md": "2b42d0586c2512c4929630216464701a6cffb400c13f810fcd3f6ee10a0d5049",
+    "dokumenti/scripts/dokumenti.py": "083f2d22c166d0907619351b3c985c2a4716527b63ab5ce5885d088db7d3c7b9",
+    "preverjanje/test_dokumenti.py": "c5fa3f95e028ef04ad60107622051a87b138fb7339ff801f015aae2cb3662fe7",
+    "setup/pripravi.py": "80feb71797f7a9cbb413434d55bdbaedf43f22d2a0578a7231da5418b9096cec",
+    "preverjanje/test_pripravi.py": "3a6a4c7caeb8bcf1bcb0ee2e1f8e48f44a454779ed368563c0caa5df1659a318"
+  }
+}

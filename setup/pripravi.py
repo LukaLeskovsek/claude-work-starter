@@ -5,10 +5,13 @@ import io
 import json
 from pathlib import Path
 import stat
+import os
+import tempfile
+import uuid
 import urllib.request
 import zipfile
 
-VERSION = "2026-09-10-v3"
+VERSION = "2026-09-12-v4"
 BASE = "https://claude-delavnica-starter.luka36512.chatgpt.site"
 ARCHIVE_URL = f"{BASE}/claude-work-starter-{VERSION}.zip"
 MANIFEST_URL = f"{BASE}/claude-work-starter-{VERSION}.json"
@@ -16,6 +19,10 @@ FILES = (
     "README.md", "NASTAVI-CLAUDE.md", "ZA-IZVAJALCA.md", "PREVERJANJE.md",
     "ZACNI-TUKAJ.txt", "dokumenti/SKILL.md", "dokumenti/scripts/dokumenti.py",
     "preverjanje/test_dokumenti.py", "setup/pripravi.py", "preverjanje/test_pripravi.py",
+    "dokumenti/scripts/indeks.py", "dokumenti/requirements.txt", "preverjanje/test_indeks.py",
+    "setup/namesti.py", "setup/predhodne-izdaje.json", "preverjanje/test_namesti.py",
+    "predloge/GLOBALNA-NAVODILA.md", "predloge/DNEVNA-RUTINA.md", "predloge/IZ-NALOGE-V-SKILL.md",
+    "preverjanje/preizkus_claude.py",
 )
 LIMIT = 5 * 1024 * 1024
 
@@ -35,7 +42,7 @@ def download(url):
     return data
 
 
-def unpack(root, archive, manifest):
+def unpack(root, archive, manifest, upgrade=False):
     """Validate every member and destination before creating any package files."""
     root = Path(root).resolve(strict=True)
     if not root.is_dir():
@@ -78,14 +85,29 @@ def unpack(root, archive, manifest):
                     raise ValueError("Konflikt datoteke in mape: " + name)
         return current
 
-    pending = []
+    pending, replacements = [], {}
+    previous = json.loads(payload["setup/predhodne-izdaje.json"])
     for name, data in payload.items():
         target = check_path(name)
         if target.exists():
             if target.read_bytes() != data:
-                raise ValueError("Obstoječa datoteka se razlikuje; nič ni prepisano: " + name)
+                old = target.read_bytes()
+                if not upgrade or not any(version.get(name) == digest(old) for version in previous.values()):
+                    raise ValueError("Obstoječa datoteka se razlikuje; nič ni prepisano: " + name)
+                replacements[name] = old
         else:
             pending.append(name)
+    backup = root / ".claude-starter-backups" / uuid.uuid4().hex
+    if replacements:
+        check_path(str(backup.relative_to(root)))
+        for name, old in replacements.items():
+            target = check_path(name)
+            if target.read_bytes() != old:
+                raise ValueError("Datoteka se je spremenila po preverjanju: " + name)
+            saved = backup / name
+            saved.parent.mkdir(parents=True, exist_ok=True)
+            with saved.open("xb") as output:
+                output.write(old)
     for name in pending:
         target = check_path(name)
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -93,23 +115,37 @@ def unpack(root, archive, manifest):
         # Exclusive creation also preserves a file created since the preflight check.
         with target.open("xb") as output:
             output.write(payload[name])
+    for name, old in replacements.items():
+        target = check_path(name)
+        if target.read_bytes() != old:
+            raise ValueError("Datoteka se je spremenila; nadaljevanje prekinjeno: " + name)
+        with tempfile.NamedTemporaryFile(dir=target.parent, delete=False) as output:
+            temporary = Path(output.name)
+            output.write(payload[name])
+        try:
+            os.replace(temporary, target)
+        finally:
+            temporary.unlink(missing_ok=True)
     for name, data in payload.items():
         if check_path(name).read_bytes() != data:
             raise ValueError("Končno preverjanje ni uspelo: " + name)
     return {"root": str(root), "version": VERSION, "files": len(payload),
-            "created": len(pending), "unchanged": len(payload) - len(pending),
+            "created": len(pending), "updated": len(replacements),
+            "backup": str(backup) if replacements else None,
+            "unchanged": len(payload) - len(pending) - len(replacements),
             "next": str(root / "NASTAVI-CLAUDE.md")}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", required=True, help="Potrjena absolutna delovna mapa")
+    parser.add_argument("--upgrade", action="store_true", help="Po potrditvi nadgradi samo nespremenjene datoteke znane izdaje; ustvari kopijo")
     args = parser.parse_args()
     if not Path(args.root).is_absolute():
         parser.error("--root mora biti absolutna pot")
     try:
         manifest = json.loads(download(MANIFEST_URL))
-        result = unpack(args.root, download(ARCHIVE_URL), manifest)
+        result = unpack(args.root, download(ARCHIVE_URL), manifest, args.upgrade)
     except (OSError, ValueError, KeyError, zipfile.BadZipFile) as error:
         parser.exit(1, f"Priprava ni zaključena: {error}\nNe prepisuj datotek; blokado predaj izvajalcu.\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))
