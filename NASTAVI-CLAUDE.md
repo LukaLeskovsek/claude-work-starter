@@ -4,7 +4,7 @@ Ta datoteka je navodilo za Claude Code, ko uporabnik izrecno zahteva ta postopek
 
 ## 0. Pripravi celoten paket v izbrani delovni mapi
 
-Izdaja: `2026-09-12-v4.1`. Najprej preberi ta dokument v celoti; povzetek spletne strani ne zadostuje. Javni vir je https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md . Če spletno orodje vsebino odreže, jo pridobi v celoti z dovoljenim lokalnim orodjem.
+Izdaja: `2026-09-12-v4.2`. Najprej preberi ta dokument v celoti; povzetek spletne strani ne zadostuje. Javni vir je https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/NASTAVI-CLAUDE.md . Če spletno orodje vsebino odreže, jo pridobi v celoti z dovoljenim lokalnim orodjem.
 
 Uporabnik samo odpre svojo namensko delovno mapo v Claude Code in naroči nastavitev. Prenos in razširjanje opraviš **ti**, ne uporabnik. Dejanska trenutno odprta mapa je cilj; ne prestavljaj seje v Prenose, začasno mapo ali nov projekt. Pokaži njeno absolutno pot in z enim vprašanjem potrdi, ali je prava, zasebna ali skupna ter katere podmape ostanejo izključene. To je tudi potrditev obsega iz 1. koraka; pozneje ne sprašuj istega znova. Če gre za domačo mapo, celoten Drive ali nejasen cilj, najprej razreši obseg. Za zapis v skupno mapo mora biti potrjeno tudi upravičenje odgovorne osebe.
 
@@ -12,10 +12,10 @@ Povej: »V to mapo bom dodal celoten javni začetni paket. Obstoječih datotek n
 
 ### Prenos in preverjanje
 
-- Celoten ZIP: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.1.zip
-- Seznam datotek in kontrolni odtisi: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.1.json
+- Celoten ZIP: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.2.zip
+- Seznam datotek in kontrolni odtisi: https://claude-delavnica-starter.luka36512.chatgpt.site/claude-work-starter-2026-09-12-v4.2.json
 - Pomočnik: https://raw.githubusercontent.com/LukaLeskovsek/claude-work-starter/main/setup/pripravi.py
-- SHA-256 pomočnika: `b0534d90cca620d5ca4ee61e40c17cb4ebceaa6bd5ababedf6aaaa443481eb09`.
+- SHA-256 pomočnika: `17c33ad85c8f6f45795aa0049659f4e55869e1a7020789ed534a20478ba338e5`.
 
 Pomočnika pridobi kot datoteko v novo sistemsko začasno mapo, preveri navedeni odtis in preberi njegovo kodo. Ne izvajaj neposredno toka prenosa. Začasna mapa je samo prostor za zagon pomočnika; **vse datoteke paketa mora pristati neposredno v potrjeni delovni mapi**, z relativnimi potmi iz seznama, brez dodatne krovne mape `claude-work-starter/`. Ne prekopiraj samo skilla in skripta.
 
@@ -121,7 +121,7 @@ Namesti ga s pomočnikom `setup/namesti.py --workspace "potrjena mapa" --approve
 
 ## 4. Ena jasna potrditev, nato izvedba
 
-Vprašaj: »Ali ta opis tvojega dela drži in lahko uredim opisano osnovno nastavitev?« Povzetek naj jasno loči branje dogovorjene mape od ustvarjanja oziroma dopolnitve navodil, osebnih nastavitev in kazala. Pokaži lokacijo delovne mape in povej, kam sodijo zasebne nastavitve. Točne ciljne poti in tehnične spremembe imej pripravljene za pregled. Potrditev branja ni potrditev pisanja. Če uporabnik kaj spremeni, popravi predlog pred zapisom.
+Vprašaj: »Ali ta opis tvojega dela drži in lahko uredim opisano osnovno nastavitev?« Povzetek naj jasno loči branje dogovorjene mape od ustvarjanja oziroma dopolnitve navodil, osebnih nastavitev in kazala. Vključi tudi, da boš v Claude Desktop ustvaril ali posodobil lokalno dnevno rutino `osvezi-dokumente` ob 9.00. Pokaži lokacijo delovne mape in povej, kam sodijo zasebne nastavitve. Točne ciljne poti in tehnične spremembe imej pripravljene za pregled. Potrditev branja ni potrditev pisanja. Če uporabnik kaj spremeni, popravi predlog pred zapisom.
 
 Po potrditvi:
 
@@ -131,7 +131,7 @@ Po potrditvi:
 4. Za vsako potrjeno zbirko zaženi osebni `scripts/indeks.py` z `--collection ID --root "absolutna potrjena pot"`, vsemi `--exclude "relativna pot"` in ukazom `nastavi --approve-cloud --verify-private`. Stabilni ID določi izvajalec; ista skupna zbirka ima isti ID pri vseh zaposlenih. Za odobreno skupno shranjevanje dodaj `--shared --approve-shared`. Zastavice so zapis že pridobljenih odobritev, ne način njihovega obhoda. Osebno stanje ne sme ležati znotraj zbirke. Prekrivajoče zbirke razreši v en koren z izključitvami.
 5. Preberi zapisane datoteke in preveri, da ni praznih predlog, nasprotujočih pravil ali zasebnih podatkov v skupni vsebini.
 6. Po postopku osebnega skilla pripravi prvo omejeno serijo izvlečkov in resničnih AI-povzetkov. Preveri z izvirnikom. Ne pripravljaj svojih skriptov za množično branje in ne ponarejaj povzetkov za uspešen test.
-7. Z uporabnikom ustvari ali posodobi eno lokalno Desktop rutino po `predloge/DNEVNA-RUTINA.md`, vsak dan ob 9.00. Uporabi podprti vmesnik oziroma razpoložljivo uradno orodje, ne ugibanih nastavitev na disku. Če ustvarjanje ni na voljo, zabeleži potreben poseg izvajalca. Ne ustvarjaj rutine na izvajalčevem računalniku namesto pri zaposlenem.
+7. V isti Claude Desktop Code seji po `predloge/DNEVNA-RUTINA.md` **sam ustvari ali posodobi** lokalno rutino `osvezi-dokumente`, vsak dan ob 9.00. Najprej preveri seznam obstoječih rutin in enako poimenovano rutino posodobi, ne podvoji. Uporabi uradno zmožnost za načrtovane naloge, ki jo Claude lahko prikliče iz pogovora; uporabnika ne pošiljaj skozi ročno izpolnjevanje obrazca, če je ta zmožnost na voljo. Razporeda, delovne mape, modela ali stanja ne zapisuj neposredno v interne datoteke aplikacije. Če je Claude Desktop starejši od 1.1.5368 ali zmožnost ni na voljo, zabeleži blokado in kot nadomestno pot odpri uradni obrazec skupaj z uporabnikom. Rutino ustvari na računalniku zaposlenega, nikoli na izvajalčevem.
 8. Povej, kaj je dejansko urejeno in kaj še čaka na dovoljenje, preizkus ali vnos v Chat/Cowork. Tehnični povzetek za izvajalca loči od kratkih navodil zaposlenemu.
 
 Ne šteje za izvedeno, če si vsebino samo izpisal v pogovor. Namestitev rutine ni potrjena brez njenega dejanskega zapisa in preverjanja.

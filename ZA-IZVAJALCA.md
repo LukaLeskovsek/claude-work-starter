@@ -2,7 +2,7 @@
 
 ## Kaj namestimo
 
-Izdaja 2026-09-12-v4.1 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
+Izdaja 2026-09-12-v4.2 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
 
 - Osebna navodila in profil: zasebno v uporabnikovi Claude konfiguraciji; ne v Nextcloudu.
 - Pripomoček: `~/.claude/skills/dokumenti/`.
@@ -20,7 +20,7 @@ SQLite je ponovno zgradljiva lokalna iskalna datoteka, ne strežnik. Vsebuje kop
 4. Registrira zbirke s stabilnimi ID-ji in vsemi izključitvami. Privzeti nabor je spremenjeno od 2026-01-01, ne »vse veljavno od 2026«. Starejši dokumenti se izrecno vključijo.
 5. Pripravi majhno serijo. Claude vrne resnične povzetke v zasebni odgovori.json; pripomoček potrdi rezultat in objavi dokončane pakete. Ročno primerjaj pomembna dejstva z izvirnikom.
 6. V novem pogovoru brez omembe /dokumenti preveri samodejno izbiro osebnega skilla, pravi obseg in vir. Preveri tudi podmapo in nepovezano mapo.
-7. Ustvari eno lokalno Desktop rutino po `predloge/DNEVNA-RUTINA.md`. Preveri Run now, naslednji zagon brez ponovne obdelave in dejanski samodejni zagon.
+7. Agent v isti Desktop Code seji sam ustvari ali posodobi eno lokalno rutino po `predloge/DNEVNA-RUTINA.md`; ročni obrazec je samo nadomestna pot. Preveri Run now, naslednji zagon brez ponovne obdelave in dejanski samodejni zagon.
 8. Zaposlenemu ostane kratek napotek za delo in povratno informacijo po nekaj dneh, ne tehnično poročilo.
 
 ## Predpogoji

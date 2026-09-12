@@ -1,8 +1,24 @@
 # Lokalna dnevna rutina: osveži dokumente
 
-To je predloga za namestitev pri zaposlenem, ne že ustvarjena rutina.
+To je specifikacija, po kateri Claude po uporabnikovi potrditvi sam ustvari ali posodobi rutino na računalniku zaposlenega. Sam prenos paketa je še ne ustvari.
 
-V Claude Desktop → Code → Routines → New routine izberi **Local**. Preveri, da možnost obstaja v nameščeni različici. Delovna mapa je potrjena zbirka, brez Git worktree. Ime: `osvezi-dokumente`, vsak dan ob 9.00 po lokalnem času. Model: Sonnet, če je na voljo; sicer z izvajalcem potrdi razpoložljivi model. Ne povezuj API-ključa ali spreminjaj obračunavanja.
+## Samodejna namestitev
+
+Preveri, da je nameščen Claude Desktop 1.1.5368 ali novejši in da so lokalne načrtovane naloge na voljo. V isti Claude Desktop Code seji uporabi uradno zmožnost za načrtovane naloge: najprej preveri seznam obstoječih lokalnih rutin, nato enako poimenovano rutino posodobi ali ustvari novo. Uporabniku ni treba ročno izpolnjevati obrazca.
+
+Nastavi:
+
+- ime: `osvezi-dokumente`;
+- opis: `Vsako jutro osveži lokalno iskanje po potrjenih delovnih dokumentih.`;
+- vrsta: **Local**;
+- delovna mapa: dejanska potrjena krovna delovna mapa tega uporabnika;
+- Git worktree: izklopljen;
+- urnik: **Daily**, vsak dan ob 9.00 po lokalnem času;
+- model: Sonnet, če je na voljo; sicer z izvajalcem potrdi razpoložljivi model;
+- dovoljenja: Manual, z ozkimi trajnimi odobritvami šele po pregledanem prvem zagonu;
+- navodilo: celotno besedilo iz naslednjega razdelka.
+
+Ustvarjanje rutine mora biti vključeno v uporabnikovo eno jasno potrditev celotne nastavitve. Ne povezuj API-ključa in ne spreminjaj obračunavanja. Razporeda, delovne mape, modela ali stanja ne zapisuj neposredno v `~/.claude/scheduled-tasks/` ali druge interne konfiguracijske datoteke. Če uradna zmožnost iz pogovora ni na voljo, šele nato z uporabnikom uporabi Claude Desktop → Code → Routines → New routine → Local in zabeleži, da je bil potreben ročni korak.
 
 Uporabi Manual in pri prvem `Run now` preglej ter ozko odobri dejansko potrebne klice pripomočka in zapis zasebnega `odgovori.json`. Ne odobri poljubnih ukazov, celotnega diska ali `bypassPermissions`. Če dovolj ozke trajne odobritve niso možne, rutino označi kot zahtevajočo pomoč; ne obljubljaj nenadzorovanega delovanja.
 
@@ -18,4 +34,4 @@ Uporabi Manual in pri prvem `Run now` preglej ter ozko odobri dejansko potrebne 
 - Preveri vsaj en samodejni zagon. Računalnik mora biti buden in Desktop odprt; po izpuščenem času lahko Desktop sproži nadomestni zagon. Rutina ne deluje, ko je računalnik ugasnjen.
 - Pokaži `Run now`, zgodovino ter `Paused`. Ne ustvarjaj podvojene rutine.
 
-Uradni opis, preverjen pri pripravi 11. 9. 2026: https://code.claude.com/docs/en/desktop-scheduled-tasks . Pred namestitvijo preveri razpoložljivost in imena nastavitev; razporeda ne zapisuj z ugibanjem v interne konfiguracijske datoteke.
+Uradni opis, preverjen pri pripravi 12. 9. 2026: https://code.claude.com/docs/en/desktop-scheduled-tasks . Anthropic izrecno podpira ustvarjanje in upravljanje načrtovanih nalog z navodilom Claudu v Desktop seji. Pred namestitvijo vseeno preveri razpoložljivost in imena nastavitev v dejanski različici.

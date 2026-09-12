@@ -46,6 +46,16 @@ class BootstrapTests(unittest.TestCase):
         self.assertEqual({f.relative_to(self.root).as_posix() for f in self.root.rglob("*") if f.is_file()}, set(p.FILES))
         self.assertIn("## 1. Najprej obseg", Path(result["next"]).read_text(encoding="utf-8"))
 
+    def test_routine_setup_is_agent_driven_and_uses_supported_desktop_path(self):
+        source = Path(__file__).resolve().parents[1]
+        guide = (source / "NASTAVI-CLAUDE.md").read_text(encoding="utf-8")
+        routine = (source / "predloge/DNEVNA-RUTINA.md").read_text(encoding="utf-8")
+        self.assertIn("sam ustvari ali posodobi", guide)
+        self.assertIn("starejši od 1.1.5368", guide)
+        self.assertIn("najprej preveri seznam obstoječih lokalnih rutin", routine)
+        self.assertIn("vsak dan ob 9.00 po lokalnem času", routine)
+        self.assertIn("neposredno v `~/.claude/scheduled-tasks/`", routine)
+
     def test_rerun_is_noop(self):
         archive, manifest = self.package()
         p.unpack(self.root, archive, manifest)

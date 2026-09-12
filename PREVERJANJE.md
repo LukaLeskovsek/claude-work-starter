@@ -1,14 +1,14 @@
 # Kaj je preverjeno
 
-Izdaja 2026-09-12-v4.1. Preverjanje je potekalo na macOS v začasnih mapah z umetnimi podatki. Uporabnikova navodila, AIOS, službeni dokumenti in rutine niso bili spremenjeni.
+Izdaja 2026-09-12-v4.2. Preverjanje je potekalo na macOS v začasnih mapah z umetnimi podatki. Uporabnikova navodila, AIOS, službeni dokumenti in rutine niso bili spremenjeni.
 
 ## Izvedeno lokalno
 
-**52 avtomatskih preizkusov: uspešno.**
+**53 avtomatskih preizkusov: uspešno.**
 
 - 16 preizkusov osnovnega popisa ter branja DOCX/PDF: izključitve, poškodovane datoteke, obseg PDF-strani, vizualna opozorila in izvor.
 - 17 preizkusov vsebinskega indeksa: priprava, potrjevanje, iskanje, branje, odtisi, XLSX-celice in formule, dnevna omejitev, nadaljevanje dolgega dokumenta, izključitve ter lokalni zaklep.
-- 14 preizkusov prenosa paketa: popolna razširitev, ponovitev brez sprememb, nevarne poti, kontrolni odtisi, konflikti in odobrena nadgradnja znane izdaje z varnostno kopijo.
+- 15 preizkusov prenosa paketa: popolna razširitev, ponovitev brez sprememb, nevarne poti, kontrolni odtisi, konflikti, odobrena nadgradnja znane izdaje z varnostno kopijo in pogodba za samodejno ustvarjanje rutine.
 - 5 preizkusov osebne namestitve: potrebna odobritev, ohranitev globalnih navodil, ponovitev, varna migracija znane kopije in zavrnitev prilagojenega skilla.
 
 Drugi umetni uporabnik na drugi lokalni poti ponovno uporabi isti skupni paket brez novega izvlečka ali povzetka. To je simulacija sinhronizacije s kopiranjem podatkov, ne preizkus dejanskega Nextclouda.
@@ -20,6 +20,10 @@ Uporabljeni različici knjižnic: pypdf 6.10.0 in openpyxl 3.1.5. Namestitveni s
 ## Popravki po Windows preverjanju
 
 Prvi CI-preizkus je na macOS uspel, na Windows pa odkril odprte SQLite povezave, neprepoznan prazen odgovor PDF-pretvornika ter neprenosljive predpostavke testov o kodiranju in poteh. V4.1 izrecno zapira SQLite, zavrne prazen odgovor pretvornika in uporablja UTF-8 izhod; testi uporabljajo UTF-8 ter prenosljive relativne poti. Dodan je regresijski preizkus praznega PDF-odgovora. Različica postopka priprave je povečana, zato paketi iz v4 niso tiho uporabljeni kot na novo preverjeni.
+
+## Samodejna postavitev rutine
+
+V4.2 zamenja običajno ročno izpolnjevanje obrazca z navodilom, da Claude po potrditvi v isti Desktop Code seji prek uradne zmožnosti sam preveri obstoječe rutine ter ustvari ali posodobi `osvezi-dokumente`. Regresijski preizkus preveri ime, dnevni urnik ob 9.00, minimalno različico aplikacije in prepoved neposrednega pisanja internih nastavitev. To preverja pogodbo paketa, ne dejanske namestitve ali zagona na računalniku zaposlenega.
 
 ## Pravi Claudeov preizkus
 

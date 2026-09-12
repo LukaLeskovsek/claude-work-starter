@@ -139,7 +139,7 @@ Ohranimo obstoječe uporabniške zmožnosti pregleda, kazala in branja. Dodamo v
 
 ## 6. Lokalna dnevna rutina in skupna pravila
 
-Uporabimo Claude Desktop → Routines → Local, brez lastnega razporejevalnika in brez `/loop`. Pred namestitvijo preverimo podprto različico in razpoložljivost funkcije. Naloga potrebuje odprto aplikacijo in buden računalnik; izpuščene zagone obravnava Desktopov mehanizem nadomestnega zagona. Referenca: [lokalne scheduled tasks](https://code.claude.com/docs/en/desktop-scheduled-tasks), preverjeno 11. septembra 2026.
+V potrjeni Claude Desktop Code seji agent sam preveri obstoječe rutine ter prek uradne zmožnosti za načrtovane naloge ustvari ali posodobi Local rutino. Ročni obrazec je samo nadomestna pot, če zmožnost v pogovoru ni na voljo. Ne uporabljamo lastnega razporejevalnika, neposrednega pisanja internih nastavitev ali `/loop`. Lokalna rutina zahteva Claude Desktop 1.1.5368 ali novejši, odprto aplikacijo in buden računalnik; izpuščene zagone obravnava Desktopov mehanizem nadomestnega zagona. Referenca: [lokalne scheduled tasks](https://code.claude.com/docs/en/desktop-scheduled-tasks), preverjeno 12. septembra 2026.
 
 Privzeto vsak dan ob 9.00:
 
