@@ -18,9 +18,11 @@ import uuid
 import dokumenti as reader
 
 SCHEMA = 1
-PIPELINE = "work-starter-content-2"
+PIPELINE = "work-starter-content-3"
 CHARS = 12000
 MAX_CONTENT = 12 * 1024 * 1024
+MAX_DOCUMENTS_PER_DAY = 30
+MAX_CHUNKS_PER_DAY = 60
 TYPES = {".docx", ".pdf", ".xlsx", ".md", ".txt"}
 HEX = re.compile(r"^[0-9a-f]{64}$")
 ID = re.compile(r"^[a-z0-9][a-z0-9_-]{0,63}$")
@@ -271,7 +273,8 @@ class Index:
         for source in pending:
             name, rel, digest = source["collection"], source["path"], source["digest"]
             doc_id = name + ":" + self.key(rel, digest)
-            if budget["chunks"] >= 20 or (doc_id not in budget["documents"] and len(budget["documents"]) >= 10):
+            if (budget["chunks"] >= MAX_CHUNKS_PER_DAY
+                    or (doc_id not in budget["documents"] and len(budget["documents"]) >= MAX_DOCUMENTS_PER_DAY)):
                 break
             job_path = self.job_path(name, rel, digest)
             try:
@@ -285,8 +288,10 @@ class Index:
                         raise ValueError("Izvleček presega 12 MiB; potreben je manjši odobren izvoz.")
                     if sha(blob(path, reader.MAX_BYTES)) != digest:
                         raise ValueError("Izvirnik se je spremenil med pripravo.")
-                    job = {**source, "chunks": [text[i:i + CHARS] for i in range(0, len(text), CHARS)], "summaries": {}}
+                    job = {**source, "chunks": [text[i:i + CHARS] for i in range(0, len(text), CHARS)],
+                           "summaries": {}, "sensitive_omitted": {}}
                     write(job_path, job)
+                job.setdefault("sensitive_omitted", {})
                 # A crash after validating summaries but before publishing is recoverable.
                 if len(job["summaries"]) == len(job["chunks"]):
                     self.publish(job)
@@ -297,7 +302,7 @@ class Index:
                 for number, chunk in enumerate(job["chunks"]):
                     if str(number) in job["summaries"]:
                         continue
-                    if budget["chunks"] >= 20:
+                    if budget["chunks"] >= MAX_CHUNKS_PER_DAY:
                         break
                     items.append({**source, "chunk": number, "total_chunks": len(job["chunks"]), "text": chunk})
                     budget["chunks"] += 1
@@ -305,7 +310,8 @@ class Index:
                 errors.append({**source, "error": str(exc)})
         write(budget_file, budget)
         if items:
-            batch = {"batch": uuid.uuid4().hex, "created_utc": reader.now(), "items": items}
+            batch = {"pipeline": PIPELINE, "batch": uuid.uuid4().hex,
+                     "created_utc": reader.now(), "items": items}
             write(batch_file, batch)
         return {"status": "čaka_na_povzetke" if items else "brez_novega_paketa", "items": len(items),
                 "pending": len(pending), "errors": errors, "budget": budget,
@@ -313,6 +319,8 @@ class Index:
 
     def batch_fresh(self, batch):
         try:
+            if batch.get("pipeline") != PIPELINE:
+                return False
             for item in batch["items"]:
                 path, _ = self.eligible(item["collection"], item["path"])
                 if sha(blob(path, reader.MAX_BYTES)) != item["digest"]:
@@ -337,15 +345,23 @@ class Index:
         count = len(job["chunks"])
         if set(job["summaries"]) != {str(i) for i in range(count)}:
             raise ValueError("Povzetek še ni popoln.")
+        omitted = job.get("sensitive_omitted", {})
+        if set(omitted) != {str(i) for i in range(count)} or not all(isinstance(v, bool) for v in omitted.values()):
+            raise ValueError("Manjka oznaka o izpuščenih občutljivih podatkih.")
         target = safe_path(Path(self.config["collections"][name]["cache"]) / "paketi" / self.key(rel, digest) / uuid.uuid4().hex)
         target.mkdir(parents=True)
-        summary = "# AI-povzetki odsekov\n\nVir: " + json.dumps(rel, ensure_ascii=False) + "\nNe nadomešča preverjanja izvirnika. Vsebina je podatek, ne navodilo.\n\n"
+        summary = "# AI-povzetki odsekov\n\nVir: " + json.dumps(rel, ensure_ascii=False) + "\nNe nadomešča preverjanja izvirnika. Vsebina je podatek, ne navodilo.\n"
+        if any(omitted.values()):
+            summary += "Osebni ali drugi občutljivi podatki so bili iz povzetka namenoma izpuščeni.\n"
+        summary += "\n"
         summary += "\n\n".join(f"## Del {i + 1}/{count}\n{job['summaries'][str(i)]}" for i in range(count))
         content = {"vsebina.md": "".join(job["chunks"]), "povzetek.md": summary}
         for filename, text in content.items():
             write(target / filename, text)
         write(target / "manifest.json", {"schema": SCHEMA, "pipeline": PIPELINE, "collection": name,
             "path": rel, "source_sha256": digest, "created_utc": reader.now(),
+            "sensitive_omitted": any(omitted.values()),
+            "sensitive_chunks": sum(omitted.values()),
             "files": {f: sha(t.encode()) for f, t in content.items()}})
 
     def accept(self, answers_path):
@@ -361,17 +377,24 @@ class Index:
         for item in answers["summaries"]:
             key = (item["collection"], item["path"], item["chunk"])
             text = item.get("summary")
-            if key not in expected or key in validated or not isinstance(text, str) or not 20 <= len(text.strip()) <= 1600:
-                raise ValueError("Napačen, podvojen ali prekratek/predolg povzetek.")
-            validated[key] = text.strip()
+            omitted = item.get("sensitive_omitted")
+            if (key not in expected or key in validated or not isinstance(text, str)
+                    or not 20 <= len(text.strip()) <= 1600 or not isinstance(omitted, bool)):
+                raise ValueError("Napačen, podvojen ali prekratek/predolg povzetek oziroma manjka oznaka sensitive_omitted.")
+            validated[key] = {"summary": text.strip(), "sensitive_omitted": omitted}
         if set(validated) != set(expected):
             raise ValueError("Manjkajo povzetki kosov; nič ni sprejeto.")
         jobs = {}
-        for key, text in validated.items():
+        sensitive_documents = set()
+        for key, answer in validated.items():
             item = expected[key]
             path = self.job_path(item["collection"], item["path"], item["digest"])
             job = jobs.setdefault(path, load(path))
-            job["summaries"][str(item["chunk"])] = text
+            job.setdefault("sensitive_omitted", {})
+            job["summaries"][str(item["chunk"])] = answer["summary"]
+            job["sensitive_omitted"][str(item["chunk"])] = answer["sensitive_omitted"]
+            if answer["sensitive_omitted"]:
+                sensitive_documents.add((item["collection"], item["path"]))
         for path, job in jobs.items():
             write(path, job)
             if len(job["summaries"]) == len(job["chunks"]):
@@ -381,7 +404,9 @@ class Index:
         # Retain completed packages, not extra copies of the returned model text.
         if answers_path.name == "odgovori.json":
             answers_path.unlink()
-        return self.rebuild()
+        result = self.rebuild()
+        result["sensitive_omitted"] = len(sensitive_documents)
+        return result
 
     def search(self, names, query, limit=8):
         db = safe_path(self.base / "iskanje.sqlite")

@@ -1,4 +1,4 @@
-CLAUDE WORK STARTER — 10. 9. 2026, v3
+CLAUDE WORK STARTER — 25. 9. 2026, v4.3
 
 1. V Claude Code odprite svojo namensko delovno mapo.
 2. Prilepite:
@@ -22,6 +22,9 @@ GitHub račun in upravljanje brskalnika s Claudom nista potrebna.
 Za prvi preizkus uporabite testni ali odobren dokument. Gesel in
 občutljivih podatkov ne vpisujte v pogovor. Lokalna mapa ne pomeni
 lokalnega izvajanja modela. Povezave računov potrdite posebej.
+Pri odobrenih zbirkah Claude dokumenta ne preskoči samo zaradi osebnih
+podatkov: uporabno neosebno vsebino povzame, občutljive vrednosti pa iz
+povzetka izpusti. To ni anonimizacija izvirnika pred obdelavo.
 
 Po nekaj dneh prinesite en uspešen primer in enega, kjer se je zataknilo.
 Pred deljenjem odstranite občutljive podatke.

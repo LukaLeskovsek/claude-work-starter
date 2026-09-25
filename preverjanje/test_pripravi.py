@@ -50,11 +50,19 @@ class BootstrapTests(unittest.TestCase):
         source = Path(__file__).resolve().parents[1]
         guide = (source / "NASTAVI-CLAUDE.md").read_text(encoding="utf-8")
         routine = (source / "predloge/DNEVNA-RUTINA.md").read_text(encoding="utf-8")
+        skill = (source / "dokumenti/SKILL.md").read_text(encoding="utf-8")
         self.assertIn("sam ustvari ali posodobi", guide)
         self.assertIn("starejši od 1.1.5368", guide)
         self.assertIn("najprej preveri seznam obstoječih lokalnih rutin", routine)
         self.assertIn("vsak dan ob 9.00 po lokalnem času", routine)
         self.assertIn("neposredno v `~/.claude/scheduled-tasks/`", routine)
+        self.assertIn("Preverjeni interpreter:", routine)
+        self.assertIn("Potrjene zbirke:", routine)
+        self.assertIn("Dokumenta ali kosa ne preskoči", routine)
+        self.assertIn("`sensitive_omitted`", routine)
+        self.assertIn("30 dokumentov in 60 kosov", routine)
+        self.assertIn("Izpuščanje podatkov iz povzetka ni anonimizacija", routine)
+        self.assertIn("Dokumenta ali kosa ne preskoči", skill)
 
     def test_rerun_is_noop(self):
         archive, manifest = self.package()

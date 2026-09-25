@@ -34,7 +34,8 @@ class IndexTests(unittest.TestCase):
         index = index or self.i
         batch = index.batch()
         answers = {"batch": batch["batch"], "summaries": [{"collection": x["collection"], "path": x["path"],
-            "chunk": x["chunk"], "summary": "Testni povzetek: priprava ponudbe za delavnico, 120 EUR; preveri izvirnik."} for x in batch["items"]]}
+            "chunk": x["chunk"], "summary": "Testni povzetek: priprava ponudbe za delavnico, 120 EUR; preveri izvirnik.",
+            "sensitive_omitted": False} for x in batch["items"]]}
         target = index.base / "odgovori.json"
         m.write(target, answers)
         return index.accept(target)
@@ -101,18 +102,18 @@ class IndexTests(unittest.TestCase):
             self.i.batch()
 
     def test_daily_budget_cannot_be_bypassed_by_repeated_refresh(self):
-        for i in range(12):
+        for i in range(32):
             self.doc(f"{i:02}.txt")
-        self.assertEqual(self.i.prepare(["delo"])["items"], 10)
-        self.assertEqual(self.i.prepare(["delo"])["items"], 10)  # Same outstanding batch.
+        self.assertEqual(self.i.prepare(["delo"])["items"], 30)
+        self.assertEqual(self.i.prepare(["delo"])["items"], 30)  # Same outstanding batch.
         self.complete()
         self.assertEqual(self.i.prepare(["delo"])["items"], 0)
         self.assertEqual(m.load(self.i.base / "stanje.json")["pending"], 2)
 
     def test_large_document_resumes_and_is_not_searchable_until_complete(self):
-        self.doc(text="Besedilo in vsebina. " * 15000)
+        self.doc(text="Besedilo in vsebina. " * 40000)
         result = self.i.prepare(["delo"])
-        self.assertEqual(result["items"], 20)
+        self.assertEqual(result["items"], 60)
         self.assertEqual(self.complete()["ready"], 0)
         budget = m.load(self.i.base / "poraba.json")
         budget["day"] = "2020-01-01"
@@ -181,6 +182,37 @@ class IndexTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.i.accept(answer)
         self.assertFalse(list((self.root / ".claude-index").rglob("manifest.json")))
+
+    def test_sensitive_values_can_be_omitted_without_skipping_document(self):
+        self.doc(text="Ponudba za delavnico znaša 120 EUR. Kontakt je Ana Novak, ana@example.test, EMŠO 0101999500000.")
+        self.i.prepare(["delo"])
+        batch = self.i.batch()
+        item = batch["items"][0]
+        answers = {"batch": batch["batch"], "summaries": [{"collection": item["collection"],
+            "path": item["path"], "chunk": item["chunk"],
+            "summary": "Ponudba za delavnico znaša 120 EUR. Osebni in kontaktni podatki so izpuščeni; preveri izvirnik.",
+            "sensitive_omitted": True}]}
+        target = self.i.base / "odgovori.json"
+        m.write(target, answers)
+        result = self.i.accept(target)
+        self.assertEqual(result["ready"], 1)
+        self.assertEqual(result["sensitive_omitted"], 1)
+        package = next((self.root / ".claude-index").rglob("povzetek.md")).read_text(encoding="utf-8")
+        self.assertIn("120 EUR", package)
+        self.assertNotIn("Ana Novak", package)
+        self.assertNotIn("ana@example.test", package)
+        manifest = m.load(next((self.root / ".claude-index").rglob("manifest.json")))
+        self.assertTrue(manifest["sensitive_omitted"])
+
+    def test_batch_from_old_summary_policy_is_not_reused(self):
+        self.doc()
+        self.i.prepare(["delo"])
+        batch_path = self.i.base / "paket.json"
+        batch = m.load(batch_path)
+        batch["pipeline"] = "work-starter-content-2"
+        m.write(batch_path, batch)
+        with self.assertRaises(ValueError):
+            self.i.batch()
 
     def test_xlsx_cell_provenance_formula_and_source_preserved(self):
         from openpyxl import Workbook

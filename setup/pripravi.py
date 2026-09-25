@@ -12,7 +12,7 @@ import sys
 import urllib.request
 import zipfile
 
-VERSION = "2026-09-12-v4.2"
+VERSION = "2026-09-25-v4.3"
 BASE = "https://claude-delavnica-starter.luka36512.chatgpt.site"
 ARCHIVE_URL = f"{BASE}/claude-work-starter-{VERSION}.zip"
 MANIFEST_URL = f"{BASE}/claude-work-starter-{VERSION}.json"

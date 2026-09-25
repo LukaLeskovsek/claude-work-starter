@@ -2,7 +2,7 @@
 
 ## Kaj namestimo
 
-Izdaja 2026-09-12-v4.2 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
+Izdaja 2026-09-25-v4.3 pripravi osebni skill /dokumenti, lokalni vsebinski indeks in navodila za dnevno rutino. Zaposleni odpre dejansko delovno mapo ter prilepi javno navodilo. Ne potrebuje GitHuba ali upravljanja tehničnih datotek.
 
 - Osebna navodila in profil: zasebno v uporabnikovi Claude konfiguraciji; ne v Nextcloudu.
 - Pripomoček: `~/.claude/skills/dokumenti/`.
@@ -18,7 +18,7 @@ SQLite je ponovno zgradljiva lokalna iskalna datoteka, ne strežnik. Vsebuje kop
 2. Agent opravi intervju o vlogi, sodelovanju, lokacijah in povezavah. Ne izvaja popisa problematičnih procesov.
 3. Po potrditvi zažene pomočnika za osebni skill, združi profil ter globalna navodila iz `predloge/GLOBALNA-NAVODILA.md`. Obstoječi AIOS ostane.
 4. Registrira zbirke s stabilnimi ID-ji in vsemi izključitvami. Privzeti nabor je spremenjeno od 2026-01-01, ne »vse veljavno od 2026«. Starejši dokumenti se izrecno vključijo.
-5. Pripravi majhno serijo. Claude vrne resnične povzetke v zasebni odgovori.json; pripomoček potrdi rezultat in objavi dokončane pakete. Ročno primerjaj pomembna dejstva z izvirnikom.
+5. Pripravi majhno serijo. Claude vrne resnične povzetke v zasebni odgovori.json; pripomoček potrdi rezultat in objavi dokončane pakete. Na umetnem ali posebej odobrenem mešanem primeru preveri, da uporabno poslovno dejstvo ostane, testne osebne vrednosti pa se ne pojavijo v povzetku in je nastavljena oznaka `sensitive_omitted`.
 6. V novem pogovoru brez omembe /dokumenti preveri samodejno izbiro osebnega skilla, pravi obseg in vir. Preveri tudi podmapo in nepovezano mapo.
 7. Agent v isti Desktop Code seji sam ustvari ali posodobi eno lokalno rutino po `predloge/DNEVNA-RUTINA.md`; ročni obrazec je samo nadomestna pot. Preveri Run now, naslednji zagon brez ponovne obdelave in dejanski samodejni zagon.
 8. Zaposlenemu ostane kratek napotek za delo in povratno informacijo po nekaj dneh, ne tehnično poročilo.
@@ -35,7 +35,11 @@ Vsak zaposleni ima svojo lokalno rutino, praviloma ob 9.00. Računalnik mora bit
 
 Pripomoček najprej poišče veljavne pakete glede na odtis izvirnika in različico postopka. Drugi računalnik lahko povzetek ponovno uporabi. Obstoj kazala ali datum mape nista dokaz svežine.
 
-Na dan izda največ 10 dokumentov oziroma 20 kosov po največ 12.000 znakov. To ni natančna omejitev tokenov. Paket, ki čaka na povzetke, se ponovno uporabi do potrditve; daljši dokument se nadaljuje naslednji dan. Delni dokument še ni iskalni zadetek. Nespremenjeni dokumenti ne potrebujejo novega povzemanja.
+Na dan izda največ 30 dokumentov oziroma 60 kosov po največ 12.000 znakov. To ni natančna omejitev tokenov. Paket, ki čaka na povzetke, se ponovno uporabi do potrditve; daljši dokument se nadaljuje naslednji dan. Delni dokument še ni iskalni zadetek. Nespremenjeni dokumenti ne potrebujejo novega povzemanja.
+
+Odobrenega dokumenta ne zadržimo samo zato, ker vsebuje osebne ali druge občutljive podatke. Model iz povzetka izpusti konkretne osebne in dostopne podatke, ohrani varno poslovno vsebino ter za vsak kos vrne oznako `sensitive_omitted`. Pripomoček preveri prisotnost oznake, ne more pa dokazati, da je model zaznal vse občutljive vrednosti; prvi vzorec zato pregleda človek. To je minimizacija izpeljanega povzetka, ne predhodna anonimizacija. Celoten izvorni kos se še vedno obdela pri Claudu in ostane v `vsebina.md` ter lokalnem full-text indeksu. Skupni paket ima zato enako občutljivost kot izvirnik.
+
+Spremenjena politika povzetkov uporablja novo različico postopka in ne uporablja starih paketov kot novih varnih povzetkov. Starih paketov ne briše samodejno; njihovo morebitno odstranitev in hrambo potrdi skrbnik posebej.
 
 Sočasna obdelava na dveh računalnikih je dovoljena. Paketi so ločeni in kontrolno preverjeni; delni prenosi se preskočijo. Ne zagotavljamo obdelave natanko enkrat. Skupno kazalo je zamenljiva orientacija, ne vir dovoljenj ali popolnosti.
 

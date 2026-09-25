@@ -117,7 +117,7 @@ Praktični preizkus je nov pogovor z vprašanjem, na primer: »Poišči ponudbo 
 | PDF | Besedilo po straneh; opozorila za skene in neuspešno branje. |
 | XLSX | Liste, stolpce, podatke in reference celic; formule ločeno od shranjenih rezultatov. |
 
-Vsak dokument dobi metapodatke, kratek AI-povzetek ter povezave do izvlečene vsebine in izvirnika. Dolge dokumente obdelujemo po delih; delni povzetek ne predstavlja celotnega dokumenta. OCR, interpretacija grafov in samodejno preračunavanje preglednic niso del prve izdaje. Omejitve so vidne.
+Vsak dokument dobi metapodatke, kratek AI-povzetek ter povezave do izvlečene vsebine in izvirnika. Dolge dokumente obdelujemo po delih; delni povzetek ne predstavlja celotnega dokumenta. Dokumenta ne preskočimo samo zaradi osebnih ali drugih občutljivih podatkov: model iz povzetka izpusti konkretne občutljive vrednosti, ohrani varno poslovno vsebino in to označi. To ni anonimizacija pred obdelavo; izvorni kos še vedno prejme Claude in ostane v izvlečku. OCR, interpretacija grafov in samodejno preračunavanje preglednic niso del prve izdaje. Omejitve so vidne.
 
 ### Ponovna uporaba in sočasna obdelava
 
@@ -149,7 +149,7 @@ Privzeto vsak dan ob 9.00:
 4. Objavi dokončane pakete ter osveži osebno kazalo in iskanje.
 5. Zabeleži napake, preostalo delo in zadnjo uspešno osvežitev.
 
-Začetna gradnja poteka več dni: največ 10 dokumentov oziroma 20 vsebinskih kosov na zagon, kar nastopi prej. Pripomoček omeji izdajo dela; to ni zagotovljena omejitev tokenov ali stroška. Ob kvoti ali napaki delo ostane v vrsti za naslednji zagon. Rutina ne spreminja izvirnikov, poslovnih pravil, svojih dovoljenj ali lastnega urnika.
+Začetna gradnja poteka več dni: največ 30 dokumentov oziroma 60 vsebinskih kosov na dan, kar nastopi prej. Pripomoček omeji izdajo dela; to ni zagotovljena omejitev tokenov ali stroška. Ob kvoti ali napaki delo ostane v vrsti za naslednji zagon. Rutina ne spreminja izvirnikov, poslovnih pravil, svojih dovoljenj ali lastnega urnika.
 
 Vsebina za AI-povzetke se pošilja Claudu. Lokalni zagon ni lokalni model; izbrane zbirke morajo biti odobrene za takšno obdelavo.
 

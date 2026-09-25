@@ -27,9 +27,9 @@ V Claude Code odpri svojo urejeno delovno mapo in opiši želeni rezultat. Na pr
 
 Za pregled, iskanje ali stanje dokumentov lahko uporabiš tudi `/dokumenti`. Običajno zadostuje navadno vprašanje; izvajalec preveri, da Claude uporabi pravi skill in vire.
 
-Po nastavitvi lokalna dnevna rutina postopoma pripravi dokumente za hitrejše iskanje. Že pripravljene skupne povzetke ponovno uporabi. Vseh dokumentov ne obdela prvi dan. Claude Desktop mora ostati odprt in računalnik buden; izvajalec ti pokaže stanje in kako rutino ustaviš.
+Po nastavitvi lokalna dnevna rutina postopoma pripravi dokumente za hitrejše iskanje. Že pripravljene skupne povzetke ponovno uporabi. Dokumenta ne zavrže samo zato, ker vsebuje osebne ali druge občutljive podatke: uporabno neosebno vsebino povzame, občutljive vrednosti pa iz povzetka izpusti. Vseh dokumentov ne obdela prvi dan. Claude Desktop mora ostati odprt in računalnik buden; izvajalec ti pokaže stanje in kako rutino ustaviš.
 
-Izvirniki ostanejo na svojih mestih. Skupni izvlečki in povzetki so v Nextcloudu samo, če je potrjen ustrezen dostop; osebna navodila in iskalni indeks ostanejo zasebni na tvojem računalniku. Vsebina za AI-povzetke se obdeluje pri Claudu, ne samo lokalno.
+Izvirniki ostanejo na svojih mestih. Skupni izvlečki in povzetki so v Nextcloudu samo, če je potrjen ustrezen dostop; osebna navodila in iskalni indeks ostanejo zasebni na tvojem računalniku. Vsebina za AI-povzetke se obdeluje pri Claudu, ne samo lokalno. Izpuščanje občutljivih vrednosti iz povzetka ne pomeni, da je bil izvirnik anonimiziran pred obdelavo.
 
 Pomembne podatke preveri v izvirniku. Če se zatakne, Claudu povej, kaj je narobe. Če ne pomaga, shrani konkreten primer za izvajalca; ni ti treba sam popravljati nastavitev.
 

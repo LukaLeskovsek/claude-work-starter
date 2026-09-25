@@ -1,13 +1,13 @@
 # Kaj je preverjeno
 
-Izdaja 2026-09-12-v4.2. Preverjanje je potekalo na macOS v začasnih mapah z umetnimi podatki. Uporabnikova navodila, AIOS, službeni dokumenti in rutine niso bili spremenjeni.
+Izdaja 2026-09-25-v4.3. Preverjanje je potekalo na macOS v začasnih mapah z umetnimi podatki. Uporabnikova navodila, AIOS, službeni dokumenti in rutine niso bili spremenjeni.
 
 ## Izvedeno lokalno
 
-**53 avtomatskih preizkusov: uspešno.**
+**55 avtomatskih preizkusov: uspešno.**
 
 - 16 preizkusov osnovnega popisa ter branja DOCX/PDF: izključitve, poškodovane datoteke, obseg PDF-strani, vizualna opozorila in izvor.
-- 17 preizkusov vsebinskega indeksa: priprava, potrjevanje, iskanje, branje, odtisi, XLSX-celice in formule, dnevna omejitev, nadaljevanje dolgega dokumenta, izključitve ter lokalni zaklep.
+- 19 preizkusov vsebinskega indeksa: priprava, potrjevanje, iskanje, branje, odtisi, XLSX-celice in formule, dnevna omejitev, nadaljevanje dolgega dokumenta, izključitve, lokalni zaklep, oznaka izpuščenih občutljivih vrednosti ter zavrnitev serije stare politike povzemanja.
 - 15 preizkusov prenosa paketa: popolna razširitev, ponovitev brez sprememb, nevarne poti, kontrolni odtisi, konflikti, odobrena nadgradnja znane izdaje z varnostno kopijo in pogodba za samodejno ustvarjanje rutine.
 - 5 preizkusov osebne namestitve: potrebna odobritev, ohranitev globalnih navodil, ponovitev, varna migracija znane kopije in zavrnitev prilagojenega skilla.
 
@@ -25,13 +25,19 @@ Prvi CI-preizkus je na macOS uspel, na Windows pa odkril odprte SQLite povezave,
 
 V4.2 zamenja običajno ročno izpolnjevanje obrazca z navodilom, da Claude po potrditvi v isti Desktop Code seji prek uradne zmožnosti sam preveri obstoječe rutine ter ustvari ali posodobi `osvezi-dokumente`. Regresijski preizkus preveri ime, dnevni urnik ob 9.00, minimalno različico aplikacije in prepoved neposrednega pisanja internih nastavitev. To preverja pogodbo paketa, ne dejanske namestitve ali zagona na računalniku zaposlenega.
 
-## Pravi Claudeov preizkus
+## Varno povzemanje v v4.3
+
+V4.3 ne zadrži celotnega odobrenega dokumenta samo zaradi osebnih ali drugih občutljivih podatkov. Pogodba zahteva uporaben neosebni povzetek, izpuščanje občutljivih vrednosti in obvezno oznako `sensitive_omitted`. Nova različica postopka prepreči tiho ponovno uporabo paketov stare politike. Dnevna meja je 30 dokumentov oziroma 60 kosov. Rutina dobi konkretne poti interpreterja, pripomočka, zasebnega stanja in potrjene ID-je zbirk.
+
+Sintetični preizkus potrdi, da dokument z varnim poslovnim dejstvom in testnimi osebnimi vrednostmi ni preskočen, da se varen povzetek objavi in da je izpust zabeležen. Ker povzetek v testu ni ustvaril model, to ne dokazuje zaznavanja vseh vrst osebnih podatkov. Pripomoček preverja strukturo in oznako, ne semantike. Izvorni kos še vedno ostane v izvlečku in indeksu.
+
+## Predhodni pravi Claudeov preizkus
 
 **En resničen modelni povzetek umetnega zapisnika: uspešno.** Claude CLI je prek obstoječega prijavljenega računa brez orodij prejel samo umetni primer. Vrnil je strukturiran slovenski povzetek; pripomoček ga je sprejel, objavil lokalni paket in našel dokument z vsebinskim iskanjem.
 
 Povzetek je pravilno ohranil datum 20. oktobra, nalogo koordinatorja, rok petek, znesek 120 EUR ter dejstvo, da naročilo še ni potrjeno. To je pregled enega majhnega primera, ne ocena kakovosti na celotni zbirki. Prvi poskus v omejenem okolju ni videl prijave; po preverjanju dostopa do obstoječe prijave je bil preizkus uspešen. Nova prijava ali API-ključ nista bila ustvarjena.
 
-Ta preizkus ne dokazuje samodejne izbire osebnega skilla, nalaganja globalnih navodil ali načrtovanega zagona v Desktopu.
+Ta preizkus je bil izveden pred novo politiko izpuščanja občutljivih vrednosti. Posodobljeni opt-in preizkus zdaj vsebuje neresnične testne osebne podatke in preveri, da jih model izpusti, vendar v tej izdaji še ni bil izveden. Predhodni preizkus zato ne dokazuje samodejne izbire osebnega skilla, nalaganja globalnih navodil, varnega povzemanja ali načrtovanega zagona v Desktopu.
 
 ## Ponovitev
 
@@ -53,6 +59,7 @@ Avtomatsko preverjanje na Windows in macOS je določeno v [GitHub Actions](https
 - Resnična sinhronizacija Nextclouda, delni prenosi, offline datoteke in različni strežniški dostopi.
 - Ustvarjena lokalna Desktop rutina, ozke trajne odobritve, dejanski samodejni zagon in nadomestni zagon po prebujanju.
 - Kakovost povzetkov na odobrenem vzorcu dejanskih DOCX, PDF in XLSX.
+- Kakovost zaznavanja in izpuščanja osebnih ter drugih občutljivih vrednosti v dejanskih dokumentih.
 - Potrjena organizacijska pravila obdelave, deljenja, hrambe in čiščenja izpeljane vsebine.
 
 OCR, grafi in preračunavanje Excelovih formul niso vključeni. Kontrolni odtisi preverjajo različico in celovitost, ne resničnosti povzetkov ali strežniških dovoljenj. Indeks je pomoč pri iskanju, ne zamenjava izvirnikov.
